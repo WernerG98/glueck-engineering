@@ -1,0 +1,141 @@
+export default function GlueckEngineeringWebsite() {
+  const shopItems = [
+    {
+      name: "Automotive-Teil (Halter / Adapter)",
+      category: "Fertigteil",
+      price: "ab 24 €",
+      text: "Funktionales Bauteil für Fahrzeug oder Werkstatt – sauber konstruiert und direkt einsetzbar.",
+    },
+    {
+      name: "Engineering Artwork",
+      category: "Artwork",
+      price: "ab 19 €",
+      text: "Technische Motive, Reliefs und Designs für Garage, Büro oder Wohnraum.",
+    },
+    {
+      name: "Custom Artwork (dein Motiv)",
+      category: "Custom",
+      price: "ab 25 €",
+      text: "Du lieferst dein Bild – ich mache daraus ein druckbares Artwork (z. B. Hueforge / Relief).",
+    },
+  ];
+
+  return (
+    <div className="min-h-screen bg-neutral-950 text-white">
+      <header className="sticky top-0 z-50 border-b border-white/10 bg-neutral-950/90 backdrop-blur">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
+          <div className="flex items-center gap-4">
+            <img src="/logo.png" alt="Glück Engineering Logo" className="h-12 w-12 object-contain" />
+            <div>
+              <div className="text-2xl font-bold tracking-tight">Glück Engineering</div>
+              <div className="text-sm text-neutral-400">Fertigteile · Artworks · Custom Designs</div>
+            </div>
+          </div>
+          <nav className="hidden gap-6 text-sm text-neutral-300 md:flex">
+            <a href="#shop" className="transition hover:text-white">Shop</a>
+            <a href="#kontakt" className="transition hover:text-white">Kontakt</a>
+          </nav>
+        </div>
+      </header>
+
+      <main>
+        <section className="mx-auto max-w-7xl px-6 py-20">
+          <div className="max-w-3xl">
+            <div className="mb-4 inline-flex rounded-full border border-green-500/30 bg-green-500/10 px-4 py-1 text-sm text-green-300">
+              Shop für funktionale Teile & Designs
+            </div>
+            <h1 className="text-4xl font-bold leading-tight md:text-6xl">
+              Klare Produkte statt unnötigem Overhead
+            </h1>
+            <p className="mt-6 text-lg leading-8 text-neutral-300">
+              Glück Engineering ist aktuell bewusst einfach aufgebaut: Ein klarer Shop mit funktionalen Automotive-Teilen, technischen Artworks und individuellen Designs auf Kundenbasis.
+            </p>
+            <div className="mt-8 flex gap-4">
+              <a
+                href="#shop"
+                className="rounded-2xl bg-green-500 px-6 py-3 font-semibold text-black transition hover:bg-green-400"
+              >
+                Zum Shop
+              </a>
+              <a
+                href="#kontakt"
+                className="rounded-2xl border border-white/15 px-6 py-3 font-semibold text-white transition hover:border-white/30 hover:bg-white/5"
+              >
+                Kontakt
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <section id="shop" className="border-t border-white/10 bg-neutral-900/40">
+          <div className="mx-auto max-w-7xl px-6 py-20">
+            <div className="max-w-3xl">
+              <div className="text-sm uppercase tracking-[0.2em] text-green-300">Shop</div>
+              <h2 className="mt-3 text-3xl font-bold md:text-4xl">Produkte</h2>
+              <p className="mt-4 text-neutral-300">
+                Fokus auf wenige, klare Kategorien: funktionale Teile, fertige Artworks und individuelle Designs.
+              </p>
+            </div>
+
+            <div className="mt-10 grid gap-6 md:grid-cols-3">
+              {shopItems.map((item) => (
+                <div key={item.name} className="rounded-3xl border border-white/10 bg-white/5 p-6">
+                  <div className="flex items-start justify-between">
+                    <div className="inline-flex rounded-full border border-green-500/20 bg-green-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-green-300">
+                      {item.category}
+                    </div>
+                    <div className="text-sm font-semibold text-white/80">{item.price}</div>
+                  </div>
+
+                  <div className="mt-6 flex aspect-[4/3] items-center justify-center rounded-2xl border border-dashed border-white/10 bg-neutral-900 text-sm text-neutral-500">
+                    Produktbild
+                  </div>
+
+                  <h3 className="mt-5 text-xl font-semibold">{item.name}</h3>
+                  <p className="mt-3 text-sm leading-7 text-neutral-400">{item.text}</p>
+
+                  <button className="mt-6 w-full rounded-2xl bg-green-500 px-5 py-3 font-semibold text-black transition hover:bg-green-400">
+                    Details
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="kontakt" className="mx-auto max-w-7xl px-6 py-20">
+          <div className="rounded-[2rem] border border-white/10 bg-gradient-to-br from-green-500/15 to-neutral-900 p-8 md:p-12">
+            <div className="grid gap-10 md:grid-cols-[1fr_0.9fr] md:items-center">
+              <div>
+                <div className="text-sm uppercase tracking-[0.2em] text-green-300">Kontakt</div>
+                <h2 className="mt-3 text-3xl font-bold md:text-5xl">Artwork oder Teil anfragen</h2>
+                <p className="mt-5 text-neutral-300 leading-8">
+                  Für Custom-Artworks einfach dein Bild schicken. Für Teile kurz den Einsatzzweck beschreiben.
+                </p>
+              </div>
+
+              <div className="rounded-3xl border border-white/10 bg-black/30 p-6">
+                <div className="space-y-4 text-neutral-200">
+                  <div>
+                    <div className="text-sm text-neutral-400">E-Mail</div>
+                    <div className="text-lg font-semibold">kontakt@glueck-engineering.de</div>
+                  </div>
+                </div>
+                <a
+                  href="mailto:kontakt@glueck-engineering.de"
+                  className="mt-8 inline-flex w-full justify-center rounded-2xl bg-green-500 px-5 py-3 font-semibold text-black transition hover:bg-green-400"
+                >
+                  Anfrage senden
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer className="border-t border-white/10 px-6 py-8 text-center text-sm text-neutral-500">
+        © 2026 Glück Engineering · Shop für Fertigteile & Artworks
+      </footer>
+    </div>
+  );
+}
