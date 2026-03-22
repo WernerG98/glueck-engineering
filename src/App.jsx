@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 
 export default function GlueckEngineeringWebsite() {
-  const contactEmail = "info@glueck-engineering.de";
+  const contactEmail = "info@glueckengineering.com";
 
   const offerings = [
     {
