@@ -247,16 +247,16 @@ Viele Grüße`;
         </section>
       </main>
 
-      <footer className="mt-20 border-t border-white/10">
-        <div className="mx-auto flex max-w-7xl items-center gap-4 px-6 py-8 text-neutral-500">
-          <img
-            src="/logo.png"
-            alt="Glück Engineering Logo"
-            className="h-16 w-16 object-contain shrink-0"
-          />
-          <span>© Glück Engineering</span>
-        </div>
-      </footer>
+<footer className="mt-20 border-t border-white/10">
+  <div className="mx-auto flex max-w-7xl items-center gap-4 px-6 py-8 text-neutral-500">
+    <img
+      src="/logo.png"
+      alt="Glück Engineering Logo"
+      className="h-16 w-16 object-contain shrink-0"
+    />
+    <span>© Glück Engineering</span>
+  </div>
+</footer>
     </div>
   );
 }
