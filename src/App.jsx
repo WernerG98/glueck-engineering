@@ -53,6 +53,14 @@ export default function GlueckEngineeringWebsite() {
       requestType: "product",
     },
     {
+      name: "Kein Leben bleibt (25x25 cm)",
+      category: "3D-Artworks",
+      price: "24,99 € zzgl. Versand",
+      image: "/Artwork_Kein_Leben_bleibt.png",
+      text: "Mehrschichtiges 3D-Artwork des Sensenmanns in düsterer Atmosphäre, welcher die letzte Rose pflückt.",
+      requestType: "product",
+    },
+    {
       name: "Custom 3D-Artwork (Schwarz / Weiß)",
       category: "3D-Artworks",
       price: "34,99 € zzgl. Versand",
