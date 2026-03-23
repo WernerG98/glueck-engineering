@@ -17,7 +17,15 @@ export default function GlueckEngineeringWebsite() {
       category: "3D-Artworks",
       price: "24,99 € zzgl. Versand",
       image: "/Artwork_Stanced_E46.png",
-      text: "Mehrschichtiges 3D-Artwork im Stance-Look.",
+      text: "Mehrschichtiges 3D-Artwork einer BMW E46 Limousine im Stance-Look.",
+      requestType: "product",
+    },
+    {
+      name: "Stanced BMW E87 (25x25 cm)",
+      category: "3D-Artworks",
+      price: "24,99 € zzgl. Versand",
+      image: "/Artwork_E87.png",
+      text: "Mehrschichtiges 3D-Artwork eines BMW E87 im Stance-Look.",
       requestType: "product",
     },
     {
