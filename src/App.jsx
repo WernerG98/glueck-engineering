@@ -248,13 +248,24 @@ Viele Grüße`;
       </main>
 
 <footer className="mt-20 border-t border-white/10">
-  <div className="mx-auto flex max-w-7xl items-center gap-4 px-6 py-8 text-neutral-500">
-    <img
-      src="/logo.png"
-      alt="Glück Engineering Logo"
-      className="h-16 w-16 object-contain shrink-0"
-    />
-    <span>© Glück Engineering</span>
+  <div className="mx-auto flex max-w-7xl flex-col gap-4 px-6 py-8 text-neutral-500 md:flex-row md:items-center md:justify-between">
+    
+    <div className="flex items-center gap-4">
+      <img
+        src="/logo.png"
+        alt="Glück Engineering Logo"
+        className="h-16 w-16 object-contain shrink-0"
+      />
+      <span>© Glück Engineering</span>
+    </div>
+
+    <a
+      href={`mailto:${contactEmail}`}
+      className="text-sm transition hover:text-white"
+    >
+      {contactEmail}
+    </a>
+
   </div>
 </footer>
     </div>
