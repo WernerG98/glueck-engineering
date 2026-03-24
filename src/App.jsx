@@ -13,7 +13,7 @@ export default function GlueckEngineeringWebsite() {
       requestType: "product",
     },
     {
-      name: "Stanced BMW E46 (25x25 cm)",
+      name: "Stanced BMW E46 V1 (25x25 cm)",
       category: "3D-Artworks",
       price: "24,99 € zzgl. Versand",
       image: "/Artwork_Stanced_E46.png",
@@ -53,7 +53,7 @@ export default function GlueckEngineeringWebsite() {
       requestType: "product",
     },
     {
-      name: "Kein Leben bleibt (25x25 cm)",
+      name: "No Life Remains (25x25 cm)",
       category: "3D-Artworks",
       price: "24,99 € zzgl. Versand",
       image: "/Artwork_Kein_Leben_bleibt.png",
