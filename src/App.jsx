@@ -113,7 +113,7 @@ export default function GlueckEngineeringWebsite() {
     return {
       Fertigteile: offerings.filter((i) => i.category === "Fertigteile"),
       "3D-Artworks": offerings.filter((i) => i.category === "3D-Artworks"),
-      "Custom Artworks": offerings.filter((i) => i.category === "Custom 3D-Artworks"),
+      "Custom Artworks": offerings.filter((i) => i.category === "Custom Artworks"),
       Druckservice: offerings.filter((i) => i.category === "Druckservice"),
     };
   }, []);
@@ -285,14 +285,9 @@ Rechnung liegt der Sendung bei.`;
     if (item.imageType === "comingSoon") {
       return (
         <div className="flex h-full items-center justify-center bg-neutral-950 px-6 text-center">
-          <div>
-            <p className="text-sm uppercase tracking-[0.25em] text-neutral-400">
-              Hinweis
-            </p>
-            <p className="mt-3 text-xl font-semibold text-white">
-              Bilder folgen in Kürze
-            </p>
-          </div>
+          <span className="text-lg font-semibold uppercase tracking-[0.2em] text-white">
+            Coming soon
+          </span>
         </div>
       );
     }
@@ -457,10 +452,7 @@ Rechnung liegt der Sendung bei.`;
         </section>
 
         {Object.entries(groupedOfferings).map(([key, items], index) => (
-          <section
-            key={key}
-            id={index === 0 ? "leistungen" : undefined}
-          >
+          <section key={key} id={index === 0 ? "leistungen" : undefined}>
             <h2 className="mb-6 text-2xl">{key}</h2>
 
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -544,8 +536,7 @@ Rechnung liegt der Sendung bei.`;
                 </div>
 
                 <p className="mt-4 text-sm text-neutral-400">
-                  Die Versandkosten werden nur einmalig berechnet. Die Rechnung
-                  liegt der Sendung bei.
+                 Bei Bestätigung der Bestellung werden die Bankdaten übermittelt.
                 </p>
 
                 <button
