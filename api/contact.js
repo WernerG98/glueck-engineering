@@ -65,7 +65,6 @@ export default async function handler(req, res) {
     const artworkFrameColor = String(formData.get("artworkFrameColor") || "");
     const artworkQuantity = String(formData.get("artworkQuantity") || "");
 
-    const serviceWhat = String(formData.get("serviceWhat") || "");
     const serviceMaterial = String(formData.get("serviceMaterial") || "");
     const serviceApplication = String(formData.get("serviceApplication") || "");
     const serviceQuantity = String(formData.get("serviceQuantity") || "");
@@ -93,13 +92,13 @@ Telefon: ${phone || "-"}
     if (type === "product") {
       if (!quantity.trim()) {
         return res.status(400).json({
-          error: "Bitte die Anzahl angeben.",
+          error: "Bitte die Anzahl der benötigten Teile angeben.",
         });
       }
 
       text += `Produktanfrage
 Produkt: ${subject}
-Anzahl: ${quantity}
+Anzahl der benötigten Teile: ${quantity}
 Weitere Informationen: ${notes || "-"}
 `;
     } else if (type === "custom") {
@@ -131,9 +130,9 @@ Motiv / Hinweise: ${notes || "-"}
 `;
     } else if (type === "service") {
       if (
-        !serviceWhat.trim() ||
         !serviceMaterial.trim() ||
-        !serviceApplication.trim()
+        !serviceApplication.trim() ||
+        !serviceQuantity.trim()
       ) {
         return res.status(400).json({
           error: "Bitte alle Pflichtfelder für die 3D-Druck Dienstleistung ausfüllen.",
@@ -141,10 +140,9 @@ Motiv / Hinweise: ${notes || "-"}
       }
 
       text += `3D-Druck Dienstleistung
-Was soll gedruckt werden: ${serviceWhat}
 Gewünschtes Material: ${serviceMaterial}
 Einsatzbereich: ${serviceApplication}
-Anzahl: ${serviceQuantity || "-"}
+Anzahl: ${serviceQuantity}
 Weitere Informationen: ${notes || "-"}
 `;
     } else {
