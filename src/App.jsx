@@ -83,6 +83,7 @@ Viele Grüße`;
 
   return (
     <div className="min-h-screen bg-neutral-950 text-white">
+      {/* HEADER */}
       <header className="border-b border-white/10">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-6">
           <div className="flex items-center gap-6">
@@ -94,6 +95,7 @@ Viele Grüße`;
         </div>
       </header>
 
+      {/* MAIN */}
       <main className="mx-auto max-w-7xl px-6 py-20">
         {/* HERO */}
         <section>
@@ -199,6 +201,27 @@ Viele Grüße`;
           </div>
         </section>
       </main>
+
+      {/* FOOTER (FIX) */}
+      <footer className="mt-20 border-t border-white/10">
+        <div className="mx-auto flex max-w-7xl flex-col gap-4 px-6 py-8 text-neutral-500 md:flex-row md:items-center md:justify-between">
+          <div className="flex items-center gap-4">
+            <img
+              src="/logo.png"
+              alt="Glück Engineering Logo"
+              className="h-16 w-16 object-contain"
+            />
+            <span>© Glück Engineering</span>
+          </div>
+
+          <a
+            href={contactLink}
+            className="text-sm transition hover:text-white"
+          >
+            {contactEmail}
+          </a>
+        </div>
+      </footer>
 
       {/* LIGHTBOX */}
       {selectedImage && (
