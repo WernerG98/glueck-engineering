@@ -276,7 +276,7 @@ Viele Grüße`;
 
               <div className="mt-6 overflow-hidden rounded-2xl border border-white/10">
                 <img
-                  src="/Artwork_Kein_Leben_bleibt.jpg"
+                  src="/Artwork_Kein_Leben_bleibt.png"
                   alt="Vorabentwurf des Artworks"
                   className="h-full w-full object-cover"
                 />
@@ -306,7 +306,7 @@ Viele Grüße`;
 
               <div className="mt-6 overflow-hidden rounded-2xl border border-white/10">
                 <img
-                  src="/Artwork_Kein_Leben_bleibt_Ergebnis.png"
+                  src="/Artwork_Kein_Leben_bleibt_Ergebnis.jpg"
                   alt="Fertig gedrucktes Artwork"
                   className="h-full w-full object-cover"
                 />
