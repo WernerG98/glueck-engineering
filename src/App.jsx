@@ -22,51 +22,31 @@ export default function GlueckEngineeringWebsite() {
 
   const [selectedImage, setSelectedImage] = useState(null);
 
-  const buildProductRequestLink = (itemName) => {
-    const body = `Hallo,
+  const [contactModalOpen, setContactModalOpen] = useState(false);
+  const [requestSubject, setRequestSubject] = useState("");
+  const [requestType, setRequestType] = useState("");
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    message: "",
+  });
 
-ich interessiere mich für folgendes Fertigteil:
-${itemName}
+  const openContactModal = (subject, type) => {
+    setRequestSubject(subject);
+    setRequestType(type);
 
-Name:
-E-Mail:
+    let defaultMessage = "";
 
-Weitere Informationen:
+    if (type === "product") {
+      defaultMessage = `Ich interessiere mich für folgendes Fertigteil:
+${subject}
 
-Viele Grüße`;
+Weitere Informationen:`;
+    }
 
-    return `mailto:${contactEmail}?subject=${encodeURIComponent(
-      `Anfrage: ${itemName}`
-    )}&body=${encodeURIComponent(body)}`;
-  };
-
-  const buildServiceRequestLink = () => {
-    const body = `Hallo,
-
-ich interessiere mich für eine individuelle 3D-Drucklösung.
-
-Name:
-E-Mail:
-
-Was soll gedruckt werden?
-Gewünschtes Material:
-Einsatzbereich:
-Weitere Informationen:
-
-Viele Grüße`;
-
-    return `mailto:${contactEmail}?subject=${encodeURIComponent(
-      "Anfrage: 3D-Druck"
-    )}&body=${encodeURIComponent(body)}`;
-  };
-
-  const buildCustomRequestLink = () => {
-    const body = `Hallo,
-
-ich interessiere mich für ein individuelles 3D-Artwork auf Basis eines eigenen Bildes.
-
-Name:
-E-Mail:
+    if (type === "custom") {
+      defaultMessage = `Ich interessiere mich für ein individuelles 3D-Artwork.
 
 Bitte folgende Informationen angeben:
 - Schwarz-Weiß oder in Farbe
@@ -75,12 +55,57 @@ Bitte folgende Informationen angeben:
 - Rahmenfarbe
 - Anzahl
 
-Motiv / Hinweise:
+Motiv / Hinweise:`;
+    }
+
+    if (type === "service") {
+      defaultMessage = `Ich interessiere mich für eine individuelle 3D-Druck Dienstleistung.
+
+Bitte folgende Informationen angeben:
+- Was soll gedruckt werden?
+- Gewünschtes Material
+- Einsatzbereich
+- Weitere Informationen`;
+    }
+
+    setFormData({
+      name: "",
+      email: "",
+      phone: "",
+      message: defaultMessage,
+    });
+
+    setContactModalOpen(true);
+  };
+
+  const closeContactModal = () => {
+    setContactModalOpen(false);
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const submitContactForm = () => {
+    if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
+      alert("Bitte Name, E-Mail und Nachricht ausfüllen.");
+      return;
+    }
+
+    const body = `Hallo,
+
+${formData.message}
+
+Kontaktdaten:
+Name: ${formData.name}
+E-Mail: ${formData.email}
+Telefon: ${formData.phone || "-"}
 
 Viele Grüße`;
 
-    return `mailto:${contactEmail}?subject=${encodeURIComponent(
-      "Anfrage: Individuelles 3D-Artwork"
+    window.location.href = `mailto:${contactEmail}?subject=${encodeURIComponent(
+      `Anfrage: ${requestSubject}`
     )}&body=${encodeURIComponent(body)}`;
   };
 
@@ -153,12 +178,12 @@ Viele Grüße`;
                 <h3 className="mt-4 text-lg">{item.name}</h3>
                 <p className="mt-2 text-sm text-neutral-400">{item.text}</p>
 
-                <a
-                  href={buildProductRequestLink(item.name)}
+                <button
+                  onClick={() => openContactModal(item.name, "product")}
                   className="mt-6 rounded-xl bg-neutral-700 py-3 text-center transition hover:bg-neutral-600"
                 >
                   Anfrage senden
-                </a>
+                </button>
               </div>
             ))}
           </div>
@@ -190,12 +215,14 @@ Viele Grüße`;
               </p>
 
               <div className="mt-8 flex flex-wrap gap-4">
-                <a
-                  href={buildCustomRequestLink()}
+                <button
+                  onClick={() =>
+                    openContactModal("Individuelles 3D-Artwork", "custom")
+                  }
                   className="inline-block rounded-xl bg-neutral-700 px-6 py-3 transition hover:bg-neutral-600"
                 >
                   Anfrage senden
-                </a>
+                </button>
 
                 <a
                   href="#ablauf-artworks"
@@ -225,7 +252,7 @@ Viele Grüße`;
 
         <section className="mt-20">
           <div className="rounded-2xl border border-white/10 bg-neutral-900 p-10 text-center">
-            <h2 className="text-2xl font-semibold">3D-Druck</h2>
+            <h2 className="text-2xl font-semibold">3D-Druck Dienstleistung</h2>
 
             <p className="mt-4 max-w-2xl mx-auto text-neutral-400">
               Wir bieten individuelle 3D-Drucklösungen für funktionale
@@ -244,12 +271,14 @@ Viele Grüße`;
               Informationen zu Bauteil, Material und Einsatzbereich.
             </p>
 
-            <a
-              href={buildServiceRequestLink()}
+            <button
+              onClick={() =>
+                openContactModal("3D-Druck Dienstleistung", "service")
+              }
               className="mt-8 inline-block rounded-xl bg-neutral-700 px-6 py-3 transition hover:bg-neutral-600"
             >
               Anfrage senden
-            </a>
+            </button>
           </div>
         </section>
 
@@ -389,6 +418,76 @@ Viele Grüße`;
             alt="Vollansicht"
             className="max-h-[85vh] max-w-full rounded-2xl object-contain"
           />
+        </div>
+      )}
+
+      {contactModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 px-4 py-8">
+          <div className="w-full max-w-2xl rounded-2xl border border-white/10 bg-neutral-900 p-6">
+            <div className="flex items-center justify-between">
+              <h2 className="text-2xl font-semibold">{requestSubject}</h2>
+              <button
+                onClick={closeContactModal}
+                className="rounded-lg px-3 py-2 text-neutral-400 transition hover:bg-white/5 hover:text-white"
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className="mt-6 grid gap-4">
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleInputChange}
+                placeholder="Name *"
+                className="rounded-xl border border-white/10 bg-neutral-800 px-4 py-3 outline-none placeholder:text-neutral-500"
+              />
+
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleInputChange}
+                placeholder="E-Mail *"
+                className="rounded-xl border border-white/10 bg-neutral-800 px-4 py-3 outline-none placeholder:text-neutral-500"
+              />
+
+              <input
+                type="text"
+                name="phone"
+                value={formData.phone}
+                onChange={handleInputChange}
+                placeholder="Telefon (optional)"
+                className="rounded-xl border border-white/10 bg-neutral-800 px-4 py-3 outline-none placeholder:text-neutral-500"
+              />
+
+              <textarea
+                name="message"
+                value={formData.message}
+                onChange={handleInputChange}
+                rows={10}
+                placeholder="Deine Nachricht *"
+                className="rounded-xl border border-white/10 bg-neutral-800 px-4 py-3 outline-none placeholder:text-neutral-500"
+              />
+            </div>
+
+            <div className="mt-6 flex flex-wrap justify-end gap-4">
+              <button
+                onClick={closeContactModal}
+                className="rounded-xl border border-white/10 px-6 py-3 transition hover:bg-white/5"
+              >
+                Abbrechen
+              </button>
+
+              <button
+                onClick={submitContactForm}
+                className="rounded-xl bg-neutral-700 px-6 py-3 transition hover:bg-neutral-600"
+              >
+                E-Mail vorbereiten
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>
