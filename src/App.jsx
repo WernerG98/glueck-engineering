@@ -196,7 +196,7 @@ Viele Grüße`;
               Prototypen und Sonderanfertigungen.
               <br /><br />
               Verfügbare Materialien: PLA, PETG, TPU, ABS, ASA, PC, PA sowie
-              faserverstärkte Varianten (z. B. Carbon).
+              carbonfaserverstärkte Varianten.
               <br /><br />
               Maximale Bauteilgröße: 33 × 32,5 × 32 cm.
               <br /><br />
