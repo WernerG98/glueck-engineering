@@ -21,11 +21,11 @@ export default function GlueckEngineeringWebsite() {
   ];
 
   const [selectedImage, setSelectedImage] = useState(null);
-
   const [contactModalOpen, setContactModalOpen] = useState(false);
   const [requestSubject, setRequestSubject] = useState("");
   const [requestType, setRequestType] = useState("");
   const [isSending, setIsSending] = useState(false);
+  const [attachment, setAttachment] = useState(null);
 
   const initialFormData = {
     name: "",
@@ -40,7 +40,8 @@ export default function GlueckEngineeringWebsite() {
 
     // Custom Artwork
     artworkColorMode: "",
-    artworkDimensions: "",
+    artworkWidth: "",
+    artworkHeight: "",
     artworkFrame: "",
     artworkFrameColor: "",
     artworkQuantity: "1",
@@ -53,7 +54,6 @@ export default function GlueckEngineeringWebsite() {
   };
 
   const [formData, setFormData] = useState(initialFormData);
-  const [attachment, setAttachment] = useState(null);
 
   const openContactModal = (subject, type) => {
     setRequestSubject(subject);
@@ -70,7 +70,18 @@ export default function GlueckEngineeringWebsite() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+
+    setFormData((prev) => {
+      if (name === "artworkFrame") {
+        return {
+          ...prev,
+          artworkFrame: value,
+          artworkFrameColor: value === "Ja" ? prev.artworkFrameColor : "",
+        };
+      }
+
+      return { ...prev, [name]: value };
+    });
   };
 
   const handleFileChange = (e) => {
@@ -92,11 +103,17 @@ export default function GlueckEngineeringWebsite() {
     if (requestType === "custom") {
       if (
         !formData.artworkColorMode.trim() ||
-        !formData.artworkDimensions.trim() ||
+        !String(formData.artworkWidth).trim() ||
+        !String(formData.artworkHeight).trim() ||
         !formData.artworkFrame.trim() ||
         !formData.artworkQuantity.trim()
       ) {
         alert("Bitte alle Pflichtfelder für das individuelle 3D-Artwork ausfüllen.");
+        return;
+      }
+
+      if (formData.artworkFrame === "Ja" && !formData.artworkFrameColor.trim()) {
+        alert("Bitte eine Rahmenfarbe auswählen.");
         return;
       }
     }
@@ -126,7 +143,8 @@ export default function GlueckEngineeringWebsite() {
       body.append("quantity", formData.quantity);
 
       body.append("artworkColorMode", formData.artworkColorMode);
-      body.append("artworkDimensions", formData.artworkDimensions);
+      body.append("artworkWidth", formData.artworkWidth);
+      body.append("artworkHeight", formData.artworkHeight);
       body.append("artworkFrame", formData.artworkFrame);
       body.append("artworkFrameColor", formData.artworkFrameColor);
       body.append("artworkQuantity", formData.artworkQuantity);
@@ -262,7 +280,7 @@ export default function GlueckEngineeringWebsite() {
                 mehrfarbige Ausführungen.
                 <br />
                 <br />
-                Sende uns dein Bild einfach per E-Mail. Mit der Übermittlung
+                Sende uns dein Bild einfach per Anfrage. Mit der Übermittlung
                 bestätigst du, dass du über die erforderlichen Nutzungsrechte am
                 Motiv verfügst.
               </p>
@@ -307,7 +325,7 @@ export default function GlueckEngineeringWebsite() {
           <div className="rounded-2xl border border-white/10 bg-neutral-900 p-10 text-center">
             <h2 className="text-2xl font-semibold">3D-Druck Dienstleistung</h2>
 
-            <p className="mt-4 max-w-2xl mx-auto text-neutral-400">
+            <p className="mt-4 mx-auto max-w-2xl text-neutral-400">
               Wir bieten individuelle 3D-Drucklösungen für funktionale
               Bauteile, Prototypen und Sonderanfertigungen.
               <br />
@@ -349,14 +367,14 @@ export default function GlueckEngineeringWebsite() {
                 Du sendest uns dein Bild und deine Wünsche
               </h3>
               <p className="mt-3 text-neutral-400">
-                Sende uns dein Motiv als JPG, PNG, WEBP oder SVG per E-Mail und
-                teile uns folgende Informationen mit:
+                Sende uns dein Motiv als JPG, PNG, WEBP oder SVG und teile uns
+                folgende Informationen mit:
               </p>
               <div className="mt-4 space-y-2 text-neutral-300">
-                <p>• Schwarz-Weiß oder in Farbe</p>
+                <p>• Schwarz-Weiß oder Farbe</p>
                 <p>• Gewünschte Abmessungen</p>
                 <p>• Rahmen gewünscht oder nicht</p>
-                <p>• Gewünschte Rahmenfarbe</p>
+                <p>• Rahmenfarbe</p>
                 <p>• Anzahl</p>
               </div>
             </div>
@@ -482,6 +500,7 @@ export default function GlueckEngineeringWebsite() {
               <button
                 onClick={closeContactModal}
                 className="rounded-lg px-3 py-2 text-neutral-400 transition hover:bg-white/5 hover:text-white"
+                disabled={isSending}
               >
                 ✕
               </button>
@@ -540,51 +559,107 @@ export default function GlueckEngineeringWebsite() {
 
               {requestType === "custom" && (
                 <>
-                  <input
-                    type="text"
-                    name="artworkColorMode"
-                    value={formData.artworkColorMode}
-                    onChange={handleInputChange}
-                    placeholder="Schwarz-Weiß oder Farbe *"
-                    className="rounded-xl border border-white/10 bg-neutral-800 px-4 py-3 outline-none placeholder:text-neutral-500"
-                  />
+                  <div className="grid gap-4 md:grid-cols-2">
+                    <div>
+                      <label className="mb-2 block text-sm text-neutral-300">
+                        Ausführung *
+                      </label>
+                      <select
+                        name="artworkColorMode"
+                        value={formData.artworkColorMode}
+                        onChange={handleInputChange}
+                        className="w-full rounded-xl border border-white/10 bg-neutral-800 px-4 py-3 outline-none"
+                      >
+                        <option value="">Bitte auswählen</option>
+                        <option value="Schwarz-Weiß">Schwarz-Weiß</option>
+                        <option value="Farbe">Farbe</option>
+                      </select>
+                    </div>
 
-                  <input
-                    type="text"
-                    name="artworkDimensions"
-                    value={formData.artworkDimensions}
-                    onChange={handleInputChange}
-                    placeholder="Abmessungen *"
-                    className="rounded-xl border border-white/10 bg-neutral-800 px-4 py-3 outline-none placeholder:text-neutral-500"
-                  />
+                    <div>
+                      <label className="mb-2 block text-sm text-neutral-300">
+                        Anzahl *
+                      </label>
+                      <input
+                        type="number"
+                        min="1"
+                        name="artworkQuantity"
+                        value={formData.artworkQuantity}
+                        onChange={handleInputChange}
+                        placeholder="Anzahl"
+                        className="w-full rounded-xl border border-white/10 bg-neutral-800 px-4 py-3 outline-none placeholder:text-neutral-500"
+                      />
+                    </div>
+                  </div>
 
-                  <input
-                    type="text"
-                    name="artworkFrame"
-                    value={formData.artworkFrame}
-                    onChange={handleInputChange}
-                    placeholder="Rahmen gewünscht / nicht gewünscht *"
-                    className="rounded-xl border border-white/10 bg-neutral-800 px-4 py-3 outline-none placeholder:text-neutral-500"
-                  />
+                  <div className="grid gap-4 md:grid-cols-2">
+                    <div>
+                      <label className="mb-2 block text-sm text-neutral-300">
+                        Breite in cm *
+                      </label>
+                      <input
+                        type="number"
+                        min="1"
+                        step="0.1"
+                        name="artworkWidth"
+                        value={formData.artworkWidth}
+                        onChange={handleInputChange}
+                        placeholder="z. B. 25"
+                        className="w-full rounded-xl border border-white/10 bg-neutral-800 px-4 py-3 outline-none placeholder:text-neutral-500"
+                      />
+                    </div>
 
-                  <input
-                    type="text"
-                    name="artworkFrameColor"
-                    value={formData.artworkFrameColor}
-                    onChange={handleInputChange}
-                    placeholder="Rahmenfarbe"
-                    className="rounded-xl border border-white/10 bg-neutral-800 px-4 py-3 outline-none placeholder:text-neutral-500"
-                  />
+                    <div>
+                      <label className="mb-2 block text-sm text-neutral-300">
+                        Höhe in cm *
+                      </label>
+                      <input
+                        type="number"
+                        min="1"
+                        step="0.1"
+                        name="artworkHeight"
+                        value={formData.artworkHeight}
+                        onChange={handleInputChange}
+                        placeholder="z. B. 25"
+                        className="w-full rounded-xl border border-white/10 bg-neutral-800 px-4 py-3 outline-none placeholder:text-neutral-500"
+                      />
+                    </div>
+                  </div>
 
-                  <input
-                    type="number"
-                    min="1"
-                    name="artworkQuantity"
-                    value={formData.artworkQuantity}
-                    onChange={handleInputChange}
-                    placeholder="Anzahl *"
-                    className="rounded-xl border border-white/10 bg-neutral-800 px-4 py-3 outline-none placeholder:text-neutral-500"
-                  />
+                  <div className="grid gap-4 md:grid-cols-2">
+                    <div>
+                      <label className="mb-2 block text-sm text-neutral-300">
+                        Rahmen gewünscht *
+                      </label>
+                      <select
+                        name="artworkFrame"
+                        value={formData.artworkFrame}
+                        onChange={handleInputChange}
+                        className="w-full rounded-xl border border-white/10 bg-neutral-800 px-4 py-3 outline-none"
+                      >
+                        <option value="">Bitte auswählen</option>
+                        <option value="Ja">Ja</option>
+                        <option value="Nein">Nein</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label className="mb-2 block text-sm text-neutral-300">
+                        Rahmenfarbe {formData.artworkFrame === "Ja" ? "*" : ""}
+                      </label>
+                      <select
+                        name="artworkFrameColor"
+                        value={formData.artworkFrameColor}
+                        onChange={handleInputChange}
+                        disabled={formData.artworkFrame !== "Ja"}
+                        className="w-full rounded-xl border border-white/10 bg-neutral-800 px-4 py-3 outline-none disabled:cursor-not-allowed disabled:opacity-50"
+                      >
+                        <option value="">Bitte auswählen</option>
+                        <option value="Schwarz">Schwarz</option>
+                        <option value="Weiß">Weiß</option>
+                      </select>
+                    </div>
+                  </div>
 
                   <textarea
                     name="notes"
