@@ -242,17 +242,21 @@ Viele Grüße`;
 
         {/* ABLAUF ARTWORKS */}
         <section id="ablauf-artworks" className="mt-24">
-          <h2 className="mb-8 text-2xl font-semibold">Ablauf für individuelle 3D-Artworks</h2>
+          <h2 className="mb-8 text-2xl font-semibold">
+            Ablauf für individuelle 3D-Artworks
+          </h2>
 
           <div className="space-y-8">
             <div className="rounded-2xl border border-white/10 bg-neutral-900 p-8">
               <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-full bg-neutral-800 text-lg font-semibold">
                 1
               </div>
-              <h3 className="text-xl font-semibold">Du sendest uns dein Bild und deine Wünsche</h3>
+              <h3 className="text-xl font-semibold">
+                Du sendest uns dein Bild und deine Wünsche
+              </h3>
               <p className="mt-3 text-neutral-400">
-                Sende uns dein Motiv als JPG, PNG, WEBP oder SVG per E-Mail und teile
-                uns folgende Informationen mit:
+                Sende uns dein Motiv als JPG, PNG, WEBP oder SVG per E-Mail und
+                teile uns folgende Informationen mit:
               </p>
               <div className="mt-4 space-y-2 text-neutral-300">
                 <p>• Schwarz-Weiß oder in Farbe</p>
@@ -267,19 +271,23 @@ Viele Grüße`;
               <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-full bg-neutral-800 text-lg font-semibold">
                 2
               </div>
-              <h3 className="text-xl font-semibold">Wir prüfen deine Angaben und erstellen einen Vorabentwurf</h3>
+              <h3 className="text-xl font-semibold">
+                Wir prüfen deine Angaben und erstellen einen Vorabentwurf
+              </h3>
               <p className="mt-3 text-neutral-400">
-                Auf Basis deiner Angaben prüfen wir die Umsetzbarkeit und senden dir
-                vor dem Druck einen Vorabentwurf inklusive Preis zu. So siehst du
-                bereits vorab, wie das spätere Artwork aussehen wird.
+                Auf Basis deiner Angaben prüfen wir die Umsetzbarkeit und senden
+                dir vor dem Druck einen Vorabentwurf inklusive Preis zu. So
+                siehst du bereits vorab, wie das spätere Artwork aussehen wird.
               </p>
 
-              <div className="mt-6 overflow-hidden rounded-2xl border border-white/10">
-                <img
-                  src="/Artwork_Kein_Leben_bleibt.png"
-                  alt="Vorabentwurf des Artworks"
-                  className="h-full w-full object-cover"
-                />
+              <div className="mt-6 flex justify-center">
+                <div className="w-full max-w-md overflow-hidden rounded-2xl border border-white/10">
+                  <img
+                    src="/Artwork_Kein_Leben_bleibt.png"
+                    alt="Vorabentwurf des Artworks"
+                    className="h-full w-full object-cover"
+                  />
+                </div>
               </div>
             </div>
 
@@ -287,10 +295,12 @@ Viele Grüße`;
               <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-full bg-neutral-800 text-lg font-semibold">
                 3
               </div>
-              <h3 className="text-xl font-semibold">Du gibst das Angebot frei</h3>
+              <h3 className="text-xl font-semibold">
+                Du gibst das Angebot frei
+              </h3>
               <p className="mt-3 text-neutral-400">
-                Erst wenn du mit Entwurf und Preis einverstanden bist, bestätigst du
-                das Angebot. Vorher wird nichts produziert.
+                Erst wenn du mit Entwurf und Preis einverstanden bist,
+                bestätigst du das Angebot. Vorher wird nichts produziert.
               </p>
             </div>
 
@@ -298,18 +308,22 @@ Viele Grüße`;
               <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-full bg-neutral-800 text-lg font-semibold">
                 4
               </div>
-              <h3 className="text-xl font-semibold">Wir fertigen dein Artwork und verschicken es</h3>
+              <h3 className="text-xl font-semibold">
+                Wir fertigen dein Artwork und verschicken es
+              </h3>
               <p className="mt-3 text-neutral-400">
                 Nach deiner Freigabe fertigen wir das Produkt und versenden es
                 anschließend sorgfältig verpackt an dich.
               </p>
 
-              <div className="mt-6 overflow-hidden rounded-2xl border border-white/10">
-                <img
-                  src="/Artwork_Kein_Leben_bleibt_Ergebnis.jpg"
-                  alt="Fertig gedrucktes Artwork"
-                  className="h-full w-full object-cover"
-                />
+              <div className="mt-6 flex justify-center">
+                <div className="w-full max-w-md overflow-hidden rounded-2xl border border-white/10">
+                  <img
+                    src="/Artwork_Kein_Leben_bleibt_Ergebnis.jpg"
+                    alt="Fertig gedrucktes Artwork"
+                    className="h-full w-full object-cover"
+                  />
+                </div>
               </div>
             </div>
           </div>
