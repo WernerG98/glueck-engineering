@@ -51,7 +51,7 @@ Name:
 E-Mail:
 
 Was soll gedruckt werden?
-Materialwunsch:
+Material:
 Einsatzbereich:
 Weitere Infos:
 
@@ -70,7 +70,7 @@ ich interessiere mich für ein individuelles 3D-Artwork auf Basis eines eigenen 
 Name:
 E-Mail:
 
-Gewünschtes Motiv / Hinweise:
+Motiv / Hinweise:
 
 Viele Grüße`;
 
@@ -103,7 +103,6 @@ Viele Grüße`;
 
   return (
     <div className="min-h-screen bg-neutral-950 text-white">
-      {/* HEADER */}
       <header className="border-b border-white/10">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-6">
           <div className="flex items-center gap-6">
@@ -115,7 +114,6 @@ Viele Grüße`;
         </div>
       </header>
 
-      {/* MAIN */}
       <main className="mx-auto max-w-7xl px-6 py-20">
         {/* HERO */}
         <section>
@@ -126,7 +124,8 @@ Viele Grüße`;
           </h1>
 
           <p className="mt-6 max-w-2xl text-neutral-400">
-            Individuelle Fertigteile, Artworks und 3D-Drucklösungen.
+            Individuelle Fertigteile, 3D-Artworks und technische
+            3D-Drucklösungen.
           </p>
         </section>
 
@@ -166,8 +165,16 @@ Viele Grüße`;
             </h2>
 
             <p className="mt-4 max-w-2xl mx-auto text-neutral-400">
-              Wir verwandeln dein Bild in ein mehrschichtiges 3D-Bild und fertigen
-              daraus ein individuelles Artwork.
+              Wir verwandeln dein Bild in ein mehrschichtiges 3D-Artwork mit
+              klarer Tiefenstruktur. Möglich sind sowohl schwarz-weiße Designs
+              als auch mehrfarbige Umsetzungen mit bis zu sechs Farben.
+              <br /><br />
+              Maximale Bauteilgröße: 33 × 32,5 × 32 cm.
+              <br />
+              Preis: ab 19,99 € (Schwarz-Weiß) bzw. ab 39,99 € (mehrfarbig).
+              <br /><br />
+              Sende uns dein Bild per E-Mail. Mit der Übermittlung bestätigst du,
+              dass du die erforderlichen Nutzungsrechte am Motiv besitzt.
             </p>
 
             <a
@@ -185,7 +192,16 @@ Viele Grüße`;
             <h2 className="text-2xl font-semibold">3D-Druck</h2>
 
             <p className="mt-4 max-w-2xl mx-auto text-neutral-400">
-              Individuelle 3D-Drucklösungen für funktionale Bauteile und Prototypen.
+              Wir bieten individuelle 3D-Drucklösungen für funktionale Bauteile,
+              Prototypen und Sonderanfertigungen.
+              <br /><br />
+              Verfügbare Materialien: PLA, PETG, TPU, ABS, ASA, PC, PA sowie
+              faserverstärkte Varianten (z. B. Carbon).
+              <br /><br />
+              Maximale Bauteilgröße: 33 × 32,5 × 32 cm.
+              <br /><br />
+              Sende uns einfach deine Anfrage mit allen relevanten Informationen
+              per E-Mail.
             </p>
 
             <a
@@ -208,10 +224,7 @@ Viele Grüße`;
                 onClick={() => setSelectedImage(image)}
                 className="aspect-square overflow-hidden rounded-2xl border border-white/10"
               >
-                <img
-                  src={image}
-                  className="h-full w-full object-cover"
-                />
+                <img src={image} className="h-full w-full object-cover" />
               </button>
             ))}
           </div>
