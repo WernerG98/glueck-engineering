@@ -173,7 +173,7 @@ Viele Grüße`;
               <br />
               Maximale Bauteilgröße: 33 × 32,5 × 32 cm.
               <br />
-              Preise ab 19,99 € für Schwarz-Weiß beziehungsweise ab 39,99 € für
+              Preise ab 19,99 € für Schwarz-Weiß beziehungsweise ab 29,99 € für
               mehrfarbige Ausführungen.
               <br />
               <br />
