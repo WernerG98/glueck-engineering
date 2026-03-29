@@ -8,13 +8,6 @@ export default function GlueckEngineeringWebsite() {
       name: "Führung für Blende / unterer Kühlergrill VW T4 (langer Vorderwagen)",
       image: "/placeholder.png",
       text: "Passgenaue Führung für den unteren Kühlergrill beim VW T4.",
-      type: "product",
-    },
-    {
-      name: "3D-Druck",
-      imageType: "service",
-      text: "Individuelle 3D-Drucklösungen für funktionale Bauteile, Prototypen und Sonderanfertigungen.",
-      type: "service",
     },
   ];
 
@@ -88,26 +81,6 @@ Viele Grüße`;
 
   const contactLink = `mailto:${contactEmail}`;
 
-  const renderFertigteilVisual = (item) => {
-    if (item.imageType === "service") {
-      return (
-        <div className="flex h-full w-full items-center justify-center bg-neutral-950">
-          <span className="text-sm uppercase tracking-[0.25em] text-white">
-            3D Druck
-          </span>
-        </div>
-      );
-    }
-
-    return (
-      <img
-        src={item.image}
-        alt={item.name}
-        className="h-full w-full object-cover"
-      />
-    );
-  };
-
   return (
     <div className="min-h-screen bg-neutral-950 text-white">
       <header className="border-b border-white/10">
@@ -133,6 +106,7 @@ Viele Grüße`;
       </header>
 
       <main className="mx-auto max-w-7xl px-6 py-20">
+        {/* HERO */}
         <section>
           <h1 className="text-4xl font-semibold md:text-6xl">
             Teile, die funktionieren.
@@ -161,6 +135,7 @@ Viele Grüße`;
           </div>
         </section>
 
+        {/* FERTIGTEILE */}
         <section id="fertigteile" className="mt-24">
           <h2 className="mb-8 text-2xl font-semibold">Fertigteile</h2>
 
@@ -171,18 +146,18 @@ Viele Grüße`;
                 className="flex flex-col rounded-2xl border border-white/10 bg-neutral-900 p-6"
               >
                 <div className="aspect-square overflow-hidden rounded-xl border border-white/10 bg-neutral-950">
-                  {renderFertigteilVisual(item)}
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    className="h-full w-full object-cover"
+                  />
                 </div>
 
                 <h3 className="mt-4 text-lg">{item.name}</h3>
                 <p className="mt-2 text-sm text-neutral-400">{item.text}</p>
 
                 <a
-                  href={
-                    item.type === "service"
-                      ? buildServiceRequestLink()
-                      : buildProductRequestLink(item.name)
-                  }
+                  href={buildProductRequestLink(item.name)}
                   className="mt-6 inline-block rounded-xl bg-neutral-700 py-3 text-center transition hover:bg-neutral-600"
                 >
                   Anfrage senden
@@ -192,6 +167,7 @@ Viele Grüße`;
           </div>
         </section>
 
+        {/* GALERIE */}
         <section id="galerie" className="mt-24">
           <h2 className="mb-8 text-2xl font-semibold">Galerie</h2>
 
@@ -201,7 +177,7 @@ Viele Grüße`;
                 key={index}
                 type="button"
                 onClick={() => setSelectedImage(image)}
-                className="aspect-square overflow-hidden rounded-2xl border border-white/10 bg-neutral-900 text-left transition hover:scale-[1.01] hover:border-white/20"
+                className="aspect-square overflow-hidden rounded-2xl border border-white/10 bg-neutral-900 transition hover:scale-[1.01] hover:border-white/20"
               >
                 <img
                   src={image}
@@ -213,15 +189,34 @@ Viele Grüße`;
           </div>
         </section>
 
+        {/* 3D DRUCK (BREIT) */}
+        <section className="mt-24">
+          <div className="rounded-2xl border border-white/10 bg-neutral-900 p-10 text-center">
+            <h2 className="text-2xl font-semibold">3D-Druck</h2>
+
+            <p className="mt-4 max-w-2xl mx-auto text-neutral-400">
+              Individuelle 3D-Drucklösungen für funktionale Bauteile,
+              Prototypen und Sonderanfertigungen. Von der Idee bis zum fertigen Teil.
+            </p>
+
+            <a
+              href={buildServiceRequestLink()}
+              className="mt-8 inline-block rounded-xl bg-neutral-700 px-6 py-3 transition hover:bg-neutral-600"
+            >
+              Anfrage senden
+            </a>
+          </div>
+        </section>
+
+        {/* CUSTOM */}
         <section className="mx-auto mt-20 max-w-3xl rounded-2xl border border-white/10 bg-neutral-900 p-8 text-center">
           <h2 className="text-2xl font-semibold">
             Individuelles 3D-Bild aus deinem Motiv
           </h2>
 
           <p className="mt-4 text-neutral-400">
-            Wir können dein Bild individuell in ein mehrschichtiges 3D-Bild
-            umwandeln und drucken. So entsteht aus deinem eigenen Motiv ein
-            persönliches Artwork mit besonderer Tiefe und Struktur.
+            Wir verwandeln dein Bild in ein mehrschichtiges 3D-Bild und fertigen
+            daraus ein individuelles Artwork mit Tiefe und Struktur.
           </p>
 
           <a
@@ -233,13 +228,14 @@ Viele Grüße`;
         </section>
       </main>
 
+      {/* FOOTER */}
       <footer className="mt-20 border-t border-white/10">
         <div className="mx-auto flex max-w-7xl flex-col gap-4 px-6 py-8 text-neutral-500 md:flex-row md:items-center md:justify-between">
           <div className="flex items-center gap-4">
             <img
               src="/logo.png"
               alt="Glück Engineering Logo"
-              className="h-16 w-16 shrink-0 object-contain"
+              className="h-16 w-16 object-contain"
             />
             <span>© Glück Engineering</span>
           </div>
@@ -253,6 +249,7 @@ Viele Grüße`;
         </div>
       </footer>
 
+      {/* LIGHTBOX */}
       {selectedImage && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 px-4 py-8"
@@ -263,9 +260,8 @@ Viele Grüße`;
             onClick={(e) => e.stopPropagation()}
           >
             <button
-              type="button"
               onClick={() => setSelectedImage(null)}
-              className="absolute right-3 top-3 z-10 rounded-lg bg-black/60 px-3 py-2 text-sm text-white transition hover:bg-black/80"
+              className="absolute right-3 top-3 z-10 rounded-lg bg-black/60 px-3 py-2 text-sm text-white hover:bg-black/80"
             >
               Schließen
             </button>
