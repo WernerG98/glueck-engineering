@@ -70,6 +70,13 @@ ich interessiere mich für ein individuelles 3D-Artwork auf Basis eines eigenen 
 Name:
 E-Mail:
 
+Bitte folgende Informationen angeben:
+- Schwarz-Weiß oder in Farbe
+- Abmessungen
+- Rahmen gewünscht / nicht gewünscht
+- Rahmenfarbe
+- Anzahl
+
 Motiv / Hinweise:
 
 Viele Grüße`;
@@ -106,7 +113,11 @@ Viele Grüße`;
       <header className="border-b border-white/10">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-6">
           <div className="flex items-center gap-6">
-            <img src="/logo.png" className="h-36 w-36 object-contain" />
+            <img
+              src="/logo.png"
+              alt="Glück Engineering Logo"
+              className="h-36 w-36 object-contain"
+            />
             <span className="text-2xl font-semibold md:text-3xl">
               Glück Engineering
             </span>
@@ -148,7 +159,7 @@ Viele Grüße`;
 
                 <a
                   href={buildProductRequestLink(item.name)}
-                  className="mt-6 rounded-xl bg-neutral-700 py-3 text-center"
+                  className="mt-6 rounded-xl bg-neutral-700 py-3 text-center transition hover:bg-neutral-600"
                 >
                   Anfrage senden
                 </a>
@@ -182,12 +193,21 @@ Viele Grüße`;
               Motiv verfügst.
             </p>
 
-            <a
-              href={buildCustomRequestLink()}
-              className="mt-8 inline-block rounded-xl bg-neutral-700 px-6 py-3"
-            >
-              Anfrage senden
-            </a>
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+              <a
+                href={buildCustomRequestLink()}
+                className="inline-block rounded-xl bg-neutral-700 px-6 py-3 transition hover:bg-neutral-600"
+              >
+                Anfrage senden
+              </a>
+
+              <a
+                href="#ablauf-artworks"
+                className="inline-block rounded-xl border border-white/10 px-6 py-3 transition hover:bg-white/5"
+              >
+                Zum Ablauf
+              </a>
+            </div>
           </div>
         </section>
 
@@ -215,10 +235,85 @@ Viele Grüße`;
 
             <a
               href={buildServiceRequestLink()}
-              className="mt-8 inline-block rounded-xl bg-neutral-700 px-6 py-3"
+              className="mt-8 inline-block rounded-xl bg-neutral-700 px-6 py-3 transition hover:bg-neutral-600"
             >
               Anfrage senden
             </a>
+          </div>
+        </section>
+
+        {/* ABLAUF ARTWORKS */}
+        <section id="ablauf-artworks" className="mt-24">
+          <h2 className="mb-8 text-2xl font-semibold">Ablauf für individuelle 3D-Artworks</h2>
+
+          <div className="space-y-8">
+            <div className="rounded-2xl border border-white/10 bg-neutral-900 p-8">
+              <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-full bg-neutral-800 text-lg font-semibold">
+                1
+              </div>
+              <h3 className="text-xl font-semibold">Du sendest uns dein Bild und deine Wünsche</h3>
+              <p className="mt-3 text-neutral-400">
+                Sende uns dein Motiv als JPG, PNG, WEBP oder SVG per E-Mail und teile
+                uns folgende Informationen mit:
+              </p>
+              <div className="mt-4 space-y-2 text-neutral-300">
+                <p>• Schwarz-Weiß oder in Farbe</p>
+                <p>• Gewünschte Abmessungen</p>
+                <p>• Rahmen gewünscht oder nicht</p>
+                <p>• Gewünschte Rahmenfarbe</p>
+                <p>• Anzahl</p>
+              </div>
+            </div>
+
+            <div className="rounded-2xl border border-white/10 bg-neutral-900 p-8">
+              <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-full bg-neutral-800 text-lg font-semibold">
+                2
+              </div>
+              <h3 className="text-xl font-semibold">Wir prüfen deine Angaben und erstellen einen Vorabentwurf</h3>
+              <p className="mt-3 text-neutral-400">
+                Auf Basis deiner Angaben prüfen wir die Umsetzbarkeit und senden dir
+                vor dem Druck einen Vorabentwurf inklusive Preis zu. So siehst du
+                bereits vorab, wie das spätere Artwork aussehen wird.
+              </p>
+
+              <div className="mt-6 overflow-hidden rounded-2xl border border-white/10">
+                <img
+                  src="/Artwork_Kein_Leben_bleibt.png"
+                  alt="Vorabentwurf des Artworks"
+                  className="h-full w-full object-cover"
+                />
+              </div>
+            </div>
+
+            <div className="rounded-2xl border border-white/10 bg-neutral-900 p-8">
+              <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-full bg-neutral-800 text-lg font-semibold">
+                3
+              </div>
+              <h3 className="text-xl font-semibold">Du gibst das Angebot frei</h3>
+              <p className="mt-3 text-neutral-400">
+                Erst wenn du mit Entwurf und Preis einverstanden bist, bestätigst du
+                das Angebot. Vorher wird nichts produziert.
+              </p>
+            </div>
+
+            <div className="rounded-2xl border border-white/10 bg-neutral-900 p-8">
+              <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-full bg-neutral-800 text-lg font-semibold">
+                4
+              </div>
+              <h3 className="text-xl font-semibold">Wir fertigen dein Artwork und verschicken es</h3>
+              <p className="mt-3 text-neutral-400">
+                Nach deiner Freigabe fertigen wir das Produkt und versenden es
+                anschließend sorgfältig verpackt an dich.
+              </p>
+
+              <div className="mt-6 overflow-hidden rounded-2xl border border-white/10">
+                <img
+                  src="/Artwork_Kein_Leben_bleibt_Ergebnis.png"
+                  alt="Fertig gedrucktes Artwork"
+                  className="h-full w-full object-cover"
+                />
+              </div>
+            </div>
           </div>
         </section>
 
@@ -231,9 +326,13 @@ Viele Grüße`;
               <button
                 key={index}
                 onClick={() => setSelectedImage(image)}
-                className="aspect-square overflow-hidden rounded-2xl border border-white/10"
+                className="aspect-square overflow-hidden rounded-2xl border border-white/10 transition hover:border-white/20"
               >
-                <img src={image} className="h-full w-full object-cover" />
+                <img
+                  src={image}
+                  alt={`Galeriebild ${index + 1}`}
+                  className="h-full w-full object-cover"
+                />
               </button>
             ))}
           </div>
@@ -244,7 +343,11 @@ Viele Grüße`;
       <footer className="mt-20 border-t border-white/10">
         <div className="mx-auto flex max-w-7xl flex-col gap-4 px-6 py-8 text-neutral-500 md:flex-row md:items-center md:justify-between">
           <div className="flex items-center gap-4">
-            <img src="/logo.png" className="h-16 w-16 object-contain" />
+            <img
+              src="/logo.png"
+              alt="Glück Engineering Logo"
+              className="h-16 w-16 object-contain"
+            />
             <span>© Glück Engineering</span>
           </div>
 
@@ -257,10 +360,14 @@ Viele Grüße`;
       {/* LIGHTBOX */}
       {selectedImage && (
         <div
-          className="fixed inset-0 bg-black/90 flex items-center justify-center"
+          className="fixed inset-0 bg-black/90 flex items-center justify-center px-4 py-8"
           onClick={() => setSelectedImage(null)}
         >
-          <img src={selectedImage} className="max-h-[85vh]" />
+          <img
+            src={selectedImage}
+            alt="Vollansicht"
+            className="max-h-[85vh] max-w-full rounded-2xl object-contain"
+          />
         </div>
       )}
     </div>
