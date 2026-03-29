@@ -25,6 +25,8 @@ export default function GlueckEngineeringWebsite() {
   const [contactModalOpen, setContactModalOpen] = useState(false);
   const [requestSubject, setRequestSubject] = useState("");
   const [requestType, setRequestType] = useState("");
+  const [isSending, setIsSending] = useState(false);
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -79,6 +81,7 @@ Bitte folgende Informationen angeben:
   };
 
   const closeContactModal = () => {
+    if (isSending) return;
     setContactModalOpen(false);
   };
 
@@ -87,26 +90,49 @@ Bitte folgende Informationen angeben:
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const submitContactForm = () => {
+  const submitContactForm = async () => {
     if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
       alert("Bitte Name, E-Mail und Nachricht ausfüllen.");
       return;
     }
 
-    const body = `Hallo,
+    try {
+      setIsSending(true);
 
-${formData.message}
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          subject: requestSubject,
+          type: requestType,
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          message: formData.message,
+        }),
+      });
 
-Kontaktdaten:
-Name: ${formData.name}
-E-Mail: ${formData.email}
-Telefon: ${formData.phone || "-"}
+      const result = await response.json();
 
-Viele Grüße`;
+      if (!response.ok) {
+        throw new Error(result?.error || "Versand fehlgeschlagen.");
+      }
 
-    window.location.href = `mailto:${contactEmail}?subject=${encodeURIComponent(
-      `Anfrage: ${requestSubject}`
-    )}&body=${encodeURIComponent(body)}`;
+      alert("Deine Anfrage wurde erfolgreich gesendet.");
+      setContactModalOpen(false);
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        message: "",
+      });
+    } catch (error) {
+      alert(error instanceof Error ? error.message : "Beim Versand ist ein Fehler aufgetreten.");
+    } finally {
+      setIsSending(false);
+    }
   };
 
   const contactLink = `mailto:${contactEmail}`;
@@ -267,8 +293,8 @@ Viele Grüße`;
               Maximale Bauteilgröße: 33 × 32,5 × 32 cm.
               <br />
               <br />
-              Sende uns deine Anfrage einfach per E-Mail mit allen relevanten
-              Informationen zu Bauteil, Material und Einsatzbereich.
+              Sende uns deine Anfrage einfach mit allen relevanten Informationen
+              zu Bauteil, Material und Einsatzbereich.
             </p>
 
             <button
@@ -476,15 +502,17 @@ Viele Grüße`;
               <button
                 onClick={closeContactModal}
                 className="rounded-xl border border-white/10 px-6 py-3 transition hover:bg-white/5"
+                disabled={isSending}
               >
                 Abbrechen
               </button>
 
               <button
                 onClick={submitContactForm}
-                className="rounded-xl bg-neutral-700 px-6 py-3 transition hover:bg-neutral-600"
+                className="rounded-xl bg-neutral-700 px-6 py-3 transition hover:bg-neutral-600 disabled:opacity-50"
+                disabled={isSending}
               >
-                E-Mail vorbereiten
+                {isSending ? "Wird gesendet..." : "Anfrage senden"}
               </button>
             </div>
           </div>
