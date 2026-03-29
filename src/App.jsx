@@ -205,6 +205,13 @@ Viele Grüße`;
               >
                 Zum Ablauf
               </a>
+
+              <a
+                href="#galerie"
+                className="inline-block rounded-xl border border-white/10 px-6 py-3 transition hover:bg-white/5"
+              >
+                Zur Galerie
+              </a>
             </div>
           </div>
         </section>
@@ -330,7 +337,7 @@ Viele Grüße`;
         </section>
 
         {/* GALERIE */}
-        <section className="mt-24">
+        <section id="galerie" className="mt-24">
           <h2 className="mb-8 text-2xl font-semibold">Galerie</h2>
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
