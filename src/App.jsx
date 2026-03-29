@@ -27,56 +27,39 @@ export default function GlueckEngineeringWebsite() {
   const [requestType, setRequestType] = useState("");
   const [isSending, setIsSending] = useState(false);
 
-  const [formData, setFormData] = useState({
+  const initialFormData = {
     name: "",
     email: "",
     phone: "",
-    message: "",
-  });
+
+    // Allgemein
+    notes: "",
+
+    // Produkt
+    quantity: "1",
+
+    // Custom Artwork
+    artworkColorMode: "",
+    artworkDimensions: "",
+    artworkFrame: "",
+    artworkFrameColor: "",
+    artworkQuantity: "1",
+
+    // Service
+    serviceWhat: "",
+    serviceMaterial: "",
+    serviceApplication: "",
+    serviceQuantity: "1",
+  };
+
+  const [formData, setFormData] = useState(initialFormData);
+  const [attachment, setAttachment] = useState(null);
 
   const openContactModal = (subject, type) => {
     setRequestSubject(subject);
     setRequestType(type);
-
-    let defaultMessage = "";
-
-    if (type === "product") {
-      defaultMessage = `Ich interessiere mich für folgendes Fertigteil:
-${subject}
-
-Weitere Informationen:`;
-    }
-
-    if (type === "custom") {
-      defaultMessage = `Ich interessiere mich für ein individuelles 3D-Artwork.
-
-Bitte folgende Informationen angeben:
-- Schwarz-Weiß oder in Farbe
-- Abmessungen
-- Rahmen gewünscht / nicht gewünscht
-- Rahmenfarbe
-- Anzahl
-
-Motiv / Hinweise:`;
-    }
-
-    if (type === "service") {
-      defaultMessage = `Ich interessiere mich für eine individuelle 3D-Druck Dienstleistung.
-
-Bitte folgende Informationen angeben:
-- Was soll gedruckt werden?
-- Gewünschtes Material
-- Einsatzbereich
-- Weitere Informationen`;
-    }
-
-    setFormData({
-      name: "",
-      email: "",
-      phone: "",
-      message: defaultMessage,
-    });
-
+    setFormData(initialFormData);
+    setAttachment(null);
     setContactModalOpen(true);
   };
 
@@ -90,28 +73,76 @@ Bitte folgende Informationen angeben:
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handleFileChange = (e) => {
+    const file = e.target.files?.[0] || null;
+    setAttachment(file);
+  };
+
   const submitContactForm = async () => {
-    if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
-      alert("Bitte Name, E-Mail und Nachricht ausfüllen.");
+    if (!formData.name.trim() || !formData.email.trim()) {
+      alert("Bitte Name und E-Mail ausfüllen.");
       return;
+    }
+
+    if (requestType === "product" && !formData.quantity.trim()) {
+      alert("Bitte die Anzahl angeben.");
+      return;
+    }
+
+    if (requestType === "custom") {
+      if (
+        !formData.artworkColorMode.trim() ||
+        !formData.artworkDimensions.trim() ||
+        !formData.artworkFrame.trim() ||
+        !formData.artworkQuantity.trim()
+      ) {
+        alert("Bitte alle Pflichtfelder für das individuelle 3D-Artwork ausfüllen.");
+        return;
+      }
+    }
+
+    if (requestType === "service") {
+      if (
+        !formData.serviceWhat.trim() ||
+        !formData.serviceMaterial.trim() ||
+        !formData.serviceApplication.trim()
+      ) {
+        alert("Bitte alle Pflichtfelder für die 3D-Druck Dienstleistung ausfüllen.");
+        return;
+      }
     }
 
     try {
       setIsSending(true);
 
+      const body = new FormData();
+      body.append("subject", requestSubject);
+      body.append("type", requestType);
+      body.append("name", formData.name);
+      body.append("email", formData.email);
+      body.append("phone", formData.phone);
+      body.append("notes", formData.notes);
+
+      body.append("quantity", formData.quantity);
+
+      body.append("artworkColorMode", formData.artworkColorMode);
+      body.append("artworkDimensions", formData.artworkDimensions);
+      body.append("artworkFrame", formData.artworkFrame);
+      body.append("artworkFrameColor", formData.artworkFrameColor);
+      body.append("artworkQuantity", formData.artworkQuantity);
+
+      body.append("serviceWhat", formData.serviceWhat);
+      body.append("serviceMaterial", formData.serviceMaterial);
+      body.append("serviceApplication", formData.serviceApplication);
+      body.append("serviceQuantity", formData.serviceQuantity);
+
+      if (attachment) {
+        body.append("attachment", attachment);
+      }
+
       const response = await fetch("/api/contact", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          subject: requestSubject,
-          type: requestType,
-          name: formData.name,
-          email: formData.email,
-          phone: formData.phone,
-          message: formData.message,
-        }),
+        body,
       });
 
       const result = await response.json();
@@ -122,12 +153,8 @@ Bitte folgende Informationen angeben:
 
       alert("Deine Anfrage wurde erfolgreich gesendet.");
       setContactModalOpen(false);
-      setFormData({
-        name: "",
-        email: "",
-        phone: "",
-        message: "",
-      });
+      setFormData(initialFormData);
+      setAttachment(null);
     } catch (error) {
       alert(error instanceof Error ? error.message : "Beim Versand ist ein Fehler aufgetreten.");
     } finally {
@@ -436,7 +463,7 @@ Bitte folgende Informationen angeben:
 
       {selectedImage && (
         <div
-          className="fixed inset-0 bg-black/90 flex items-center justify-center px-4 py-8"
+          className="fixed inset-0 flex items-center justify-center bg-black/90 px-4 py-8"
           onClick={() => setSelectedImage(null)}
         >
           <img
@@ -488,14 +515,154 @@ Bitte folgende Informationen angeben:
                 className="rounded-xl border border-white/10 bg-neutral-800 px-4 py-3 outline-none placeholder:text-neutral-500"
               />
 
-              <textarea
-                name="message"
-                value={formData.message}
-                onChange={handleInputChange}
-                rows={10}
-                placeholder="Deine Nachricht *"
-                className="rounded-xl border border-white/10 bg-neutral-800 px-4 py-3 outline-none placeholder:text-neutral-500"
-              />
+              {requestType === "product" && (
+                <>
+                  <input
+                    type="number"
+                    min="1"
+                    name="quantity"
+                    value={formData.quantity}
+                    onChange={handleInputChange}
+                    placeholder="Anzahl *"
+                    className="rounded-xl border border-white/10 bg-neutral-800 px-4 py-3 outline-none placeholder:text-neutral-500"
+                  />
+
+                  <textarea
+                    name="notes"
+                    value={formData.notes}
+                    onChange={handleInputChange}
+                    rows={6}
+                    placeholder="Weitere Informationen"
+                    className="rounded-xl border border-white/10 bg-neutral-800 px-4 py-3 outline-none placeholder:text-neutral-500"
+                  />
+                </>
+              )}
+
+              {requestType === "custom" && (
+                <>
+                  <input
+                    type="text"
+                    name="artworkColorMode"
+                    value={formData.artworkColorMode}
+                    onChange={handleInputChange}
+                    placeholder="Schwarz-Weiß oder Farbe *"
+                    className="rounded-xl border border-white/10 bg-neutral-800 px-4 py-3 outline-none placeholder:text-neutral-500"
+                  />
+
+                  <input
+                    type="text"
+                    name="artworkDimensions"
+                    value={formData.artworkDimensions}
+                    onChange={handleInputChange}
+                    placeholder="Abmessungen *"
+                    className="rounded-xl border border-white/10 bg-neutral-800 px-4 py-3 outline-none placeholder:text-neutral-500"
+                  />
+
+                  <input
+                    type="text"
+                    name="artworkFrame"
+                    value={formData.artworkFrame}
+                    onChange={handleInputChange}
+                    placeholder="Rahmen gewünscht / nicht gewünscht *"
+                    className="rounded-xl border border-white/10 bg-neutral-800 px-4 py-3 outline-none placeholder:text-neutral-500"
+                  />
+
+                  <input
+                    type="text"
+                    name="artworkFrameColor"
+                    value={formData.artworkFrameColor}
+                    onChange={handleInputChange}
+                    placeholder="Rahmenfarbe"
+                    className="rounded-xl border border-white/10 bg-neutral-800 px-4 py-3 outline-none placeholder:text-neutral-500"
+                  />
+
+                  <input
+                    type="number"
+                    min="1"
+                    name="artworkQuantity"
+                    value={formData.artworkQuantity}
+                    onChange={handleInputChange}
+                    placeholder="Anzahl *"
+                    className="rounded-xl border border-white/10 bg-neutral-800 px-4 py-3 outline-none placeholder:text-neutral-500"
+                  />
+
+                  <textarea
+                    name="notes"
+                    value={formData.notes}
+                    onChange={handleInputChange}
+                    rows={6}
+                    placeholder="Motiv / Hinweise"
+                    className="rounded-xl border border-white/10 bg-neutral-800 px-4 py-3 outline-none placeholder:text-neutral-500"
+                  />
+                </>
+              )}
+
+              {requestType === "service" && (
+                <>
+                  <input
+                    type="text"
+                    name="serviceWhat"
+                    value={formData.serviceWhat}
+                    onChange={handleInputChange}
+                    placeholder="Was soll gedruckt werden? *"
+                    className="rounded-xl border border-white/10 bg-neutral-800 px-4 py-3 outline-none placeholder:text-neutral-500"
+                  />
+
+                  <input
+                    type="text"
+                    name="serviceMaterial"
+                    value={formData.serviceMaterial}
+                    onChange={handleInputChange}
+                    placeholder="Gewünschtes Material *"
+                    className="rounded-xl border border-white/10 bg-neutral-800 px-4 py-3 outline-none placeholder:text-neutral-500"
+                  />
+
+                  <input
+                    type="text"
+                    name="serviceApplication"
+                    value={formData.serviceApplication}
+                    onChange={handleInputChange}
+                    placeholder="Einsatzbereich *"
+                    className="rounded-xl border border-white/10 bg-neutral-800 px-4 py-3 outline-none placeholder:text-neutral-500"
+                  />
+
+                  <input
+                    type="number"
+                    min="1"
+                    name="serviceQuantity"
+                    value={formData.serviceQuantity}
+                    onChange={handleInputChange}
+                    placeholder="Anzahl"
+                    className="rounded-xl border border-white/10 bg-neutral-800 px-4 py-3 outline-none placeholder:text-neutral-500"
+                  />
+
+                  <textarea
+                    name="notes"
+                    value={formData.notes}
+                    onChange={handleInputChange}
+                    rows={6}
+                    placeholder="Weitere Informationen"
+                    className="rounded-xl border border-white/10 bg-neutral-800 px-4 py-3 outline-none placeholder:text-neutral-500"
+                  />
+                </>
+              )}
+
+              <div className="rounded-xl border border-white/10 bg-neutral-800 px-4 py-3">
+                <label className="mb-2 block text-sm text-neutral-300">
+                  Datei anhängen {requestType === "custom" ? "(empfohlen)" : "(optional)"}
+                </label>
+                <input
+                  type="file"
+                  onChange={handleFileChange}
+                  className="block w-full text-sm text-neutral-400 file:mr-4 file:rounded-lg file:border-0 file:bg-neutral-700 file:px-4 file:py-2 file:text-white hover:file:bg-neutral-600"
+                  accept=".jpg,.jpeg,.png,.webp,.svg,.pdf,.step,.stp,.stl,.3mf,.zip"
+                />
+                {attachment && (
+                  <p className="mt-2 text-sm text-neutral-400">
+                    Ausgewählt: {attachment.name}
+                  </p>
+                )}
+              </div>
             </div>
 
             <div className="mt-6 flex flex-wrap justify-end gap-4">
