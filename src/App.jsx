@@ -13,7 +13,6 @@ export default function GlueckEngineeringWebsite() {
 
   const galleryImages = [
     "/Artwork_Stanced_E46.png",
-    "/Artwork_Stanced_E46_3.png",
     "/Artwork_Stanced_E46_5.png",
     "/Artwork_Stanced_E46_6.png",
     "/Artwork_E87.png",
