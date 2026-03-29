@@ -47,8 +47,7 @@ export default function GlueckEngineeringWebsite() {
     artworkQuantity: "1",
 
     // Service
-    serviceWhat: "",
-    serviceMaterial: "",
+    serviceMaterial: "Nach Empfehlung",
     serviceApplication: "",
     serviceQuantity: "1",
   };
@@ -96,7 +95,7 @@ export default function GlueckEngineeringWebsite() {
     }
 
     if (requestType === "product" && !formData.quantity.trim()) {
-      alert("Bitte die Anzahl angeben.");
+      alert("Bitte die Anzahl der benötigten Teile angeben.");
       return;
     }
 
@@ -120,9 +119,9 @@ export default function GlueckEngineeringWebsite() {
 
     if (requestType === "service") {
       if (
-        !formData.serviceWhat.trim() ||
         !formData.serviceMaterial.trim() ||
-        !formData.serviceApplication.trim()
+        !formData.serviceApplication.trim() ||
+        !formData.serviceQuantity.trim()
       ) {
         alert("Bitte alle Pflichtfelder für die 3D-Druck Dienstleistung ausfüllen.");
         return;
@@ -149,12 +148,11 @@ export default function GlueckEngineeringWebsite() {
       body.append("artworkFrameColor", formData.artworkFrameColor);
       body.append("artworkQuantity", formData.artworkQuantity);
 
-      body.append("serviceWhat", formData.serviceWhat);
       body.append("serviceMaterial", formData.serviceMaterial);
       body.append("serviceApplication", formData.serviceApplication);
       body.append("serviceQuantity", formData.serviceQuantity);
 
-      if (attachment) {
+      if (attachment && requestType !== "product") {
         body.append("attachment", attachment);
       }
 
@@ -339,7 +337,7 @@ export default function GlueckEngineeringWebsite() {
               <br />
               <br />
               Sende uns deine Anfrage einfach mit allen relevanten Informationen
-              zu Bauteil, Material und Einsatzbereich.
+              zu Material, Einsatzbereich und gewünschter Stückzahl.
             </p>
 
             <button
@@ -536,15 +534,20 @@ export default function GlueckEngineeringWebsite() {
 
               {requestType === "product" && (
                 <>
-                  <input
-                    type="number"
-                    min="1"
-                    name="quantity"
-                    value={formData.quantity}
-                    onChange={handleInputChange}
-                    placeholder="Anzahl *"
-                    className="rounded-xl border border-white/10 bg-neutral-800 px-4 py-3 outline-none placeholder:text-neutral-500"
-                  />
+                  <div>
+                    <label className="mb-2 block text-sm text-neutral-300">
+                      Anzahl der benötigten Teile *
+                    </label>
+                    <input
+                      type="number"
+                      min="1"
+                      name="quantity"
+                      value={formData.quantity}
+                      onChange={handleInputChange}
+                      placeholder="z. B. 1"
+                      className="w-full rounded-xl border border-white/10 bg-neutral-800 px-4 py-3 outline-none placeholder:text-neutral-500"
+                    />
+                  </div>
 
                   <textarea
                     name="notes"
@@ -586,17 +589,17 @@ export default function GlueckEngineeringWebsite() {
                         name="artworkQuantity"
                         value={formData.artworkQuantity}
                         onChange={handleInputChange}
-                        placeholder="Anzahl"
+                        placeholder="z. B. 1"
                         className="w-full rounded-xl border border-white/10 bg-neutral-800 px-4 py-3 outline-none placeholder:text-neutral-500"
                       />
                     </div>
                   </div>
 
-                  <div className="grid gap-4 md:grid-cols-2">
-                    <div>
-                      <label className="mb-2 block text-sm text-neutral-300">
-                        Breite in cm *
-                      </label>
+                  <div>
+                    <label className="mb-2 block text-sm text-neutral-300">
+                      Abmessungen in cm *
+                    </label>
+                    <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-3">
                       <input
                         type="number"
                         min="1"
@@ -604,15 +607,10 @@ export default function GlueckEngineeringWebsite() {
                         name="artworkWidth"
                         value={formData.artworkWidth}
                         onChange={handleInputChange}
-                        placeholder="z. B. 25"
+                        placeholder="Breite"
                         className="w-full rounded-xl border border-white/10 bg-neutral-800 px-4 py-3 outline-none placeholder:text-neutral-500"
                       />
-                    </div>
-
-                    <div>
-                      <label className="mb-2 block text-sm text-neutral-300">
-                        Höhe in cm *
-                      </label>
+                      <span className="text-neutral-400">×</span>
                       <input
                         type="number"
                         min="1"
@@ -620,7 +618,7 @@ export default function GlueckEngineeringWebsite() {
                         name="artworkHeight"
                         value={formData.artworkHeight}
                         onChange={handleInputChange}
-                        placeholder="z. B. 25"
+                        placeholder="Höhe"
                         className="w-full rounded-xl border border-white/10 bg-neutral-800 px-4 py-3 outline-none placeholder:text-neutral-500"
                       />
                     </div>
@@ -674,42 +672,48 @@ export default function GlueckEngineeringWebsite() {
 
               {requestType === "service" && (
                 <>
-                  <input
-                    type="text"
-                    name="serviceWhat"
-                    value={formData.serviceWhat}
-                    onChange={handleInputChange}
-                    placeholder="Was soll gedruckt werden? *"
-                    className="rounded-xl border border-white/10 bg-neutral-800 px-4 py-3 outline-none placeholder:text-neutral-500"
-                  />
+                  <div>
+                    <label className="mb-2 block text-sm text-neutral-300">
+                      Gewünschtes Material *
+                    </label>
+                    <input
+                      type="text"
+                      name="serviceMaterial"
+                      value={formData.serviceMaterial}
+                      onChange={handleInputChange}
+                      placeholder="Nach Empfehlung"
+                      className="w-full rounded-xl border border-white/10 bg-neutral-800 px-4 py-3 outline-none placeholder:text-neutral-500"
+                    />
+                  </div>
 
-                  <input
-                    type="text"
-                    name="serviceMaterial"
-                    value={formData.serviceMaterial}
-                    onChange={handleInputChange}
-                    placeholder="Gewünschtes Material *"
-                    className="rounded-xl border border-white/10 bg-neutral-800 px-4 py-3 outline-none placeholder:text-neutral-500"
-                  />
+                  <div>
+                    <label className="mb-2 block text-sm text-neutral-300">
+                      Einsatzbereich *
+                    </label>
+                    <input
+                      type="text"
+                      name="serviceApplication"
+                      value={formData.serviceApplication}
+                      onChange={handleInputChange}
+                      placeholder="z. B. Innenraum, Motorraum, Prototyp, Dekoration"
+                      className="w-full rounded-xl border border-white/10 bg-neutral-800 px-4 py-3 outline-none placeholder:text-neutral-500"
+                    />
+                  </div>
 
-                  <input
-                    type="text"
-                    name="serviceApplication"
-                    value={formData.serviceApplication}
-                    onChange={handleInputChange}
-                    placeholder="Einsatzbereich *"
-                    className="rounded-xl border border-white/10 bg-neutral-800 px-4 py-3 outline-none placeholder:text-neutral-500"
-                  />
-
-                  <input
-                    type="number"
-                    min="1"
-                    name="serviceQuantity"
-                    value={formData.serviceQuantity}
-                    onChange={handleInputChange}
-                    placeholder="Anzahl"
-                    className="rounded-xl border border-white/10 bg-neutral-800 px-4 py-3 outline-none placeholder:text-neutral-500"
-                  />
+                  <div>
+                    <label className="mb-2 block text-sm text-neutral-300">
+                      Anzahl *
+                    </label>
+                    <input
+                      type="number"
+                      min="1"
+                      name="serviceQuantity"
+                      value={formData.serviceQuantity}
+                      onChange={handleInputChange}
+                      placeholder="z. B. 1"
+                      className="w-full rounded-xl border border-white/10 bg-neutral-800 px-4 py-3 outline-none placeholder:text-neutral-500"
+                    />
+                  </div>
 
                   <textarea
                     name="notes"
@@ -722,22 +726,24 @@ export default function GlueckEngineeringWebsite() {
                 </>
               )}
 
-              <div className="rounded-xl border border-white/10 bg-neutral-800 px-4 py-3">
-                <label className="mb-2 block text-sm text-neutral-300">
-                  Datei anhängen {requestType === "custom" ? "(empfohlen)" : "(optional)"}
-                </label>
-                <input
-                  type="file"
-                  onChange={handleFileChange}
-                  className="block w-full text-sm text-neutral-400 file:mr-4 file:rounded-lg file:border-0 file:bg-neutral-700 file:px-4 file:py-2 file:text-white hover:file:bg-neutral-600"
-                  accept=".jpg,.jpeg,.png,.webp,.svg,.pdf,.step,.stp,.stl,.3mf,.zip"
-                />
-                {attachment && (
-                  <p className="mt-2 text-sm text-neutral-400">
-                    Ausgewählt: {attachment.name}
-                  </p>
-                )}
-              </div>
+              {requestType !== "product" && (
+                <div className="rounded-xl border border-white/10 bg-neutral-800 px-4 py-3">
+                  <label className="mb-2 block text-sm text-neutral-300">
+                    Datei anhängen {requestType === "custom" ? "(empfohlen)" : "(optional)"}
+                  </label>
+                  <input
+                    type="file"
+                    onChange={handleFileChange}
+                    className="block w-full text-sm text-neutral-400 file:mr-4 file:rounded-lg file:border-0 file:bg-neutral-700 file:px-4 file:py-2 file:text-white hover:file:bg-neutral-600"
+                    accept=".jpg,.jpeg,.png,.webp,.svg,.pdf,.step,.stp,.stl,.3mf,.zip"
+                  />
+                  {attachment && (
+                    <p className="mt-2 text-sm text-neutral-400">
+                      Ausgewählt: {attachment.name}
+                    </p>
+                  )}
+                </div>
+              )}
             </div>
 
             <div className="mt-6 flex flex-wrap justify-end gap-4">
