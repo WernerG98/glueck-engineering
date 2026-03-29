@@ -19,7 +19,6 @@ export default function GlueckEngineeringWebsite() {
     "/Artwork_E87.png",
     "/Artwork_Foggy_Mountains.png",
     "/Artwork_Wave.png",
-    "/Artwork_Kein_Leben_bleibt.png",
   ];
 
   const [selectedImage, setSelectedImage] = useState(null);
