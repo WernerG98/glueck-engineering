@@ -6,7 +6,7 @@ export default function GlueckEngineeringWebsite() {
   const fertigteile = [
     {
       name: "Führung für Blende / unterer Kühlergrill VW T4 (langer Vorderwagen)",
-      image: "/placeholder.png",
+      imageType: "comingSoon",
       text: "Passgenaue Führung für den unteren Kühlergrill beim VW T4.",
     },
   ];
@@ -81,6 +81,26 @@ Viele Grüße`;
 
   const contactLink = `mailto:${contactEmail}`;
 
+  const renderFertigteilVisual = (item) => {
+    if (item.imageType === "comingSoon") {
+      return (
+        <div className="flex h-full w-full items-center justify-center bg-neutral-950">
+          <span className="text-lg font-semibold uppercase tracking-[0.2em] text-white">
+            Coming soon
+          </span>
+        </div>
+      );
+    }
+
+    return (
+      <img
+        src={item.image}
+        alt={item.name}
+        className="h-full w-full object-cover"
+      />
+    );
+  };
+
   return (
     <div className="min-h-screen bg-neutral-950 text-white">
       {/* HEADER */}
@@ -120,12 +140,8 @@ Viele Grüße`;
                 key={index}
                 className="flex flex-col rounded-2xl border border-white/10 bg-neutral-900 p-6"
               >
-                <div className="aspect-square overflow-hidden rounded-xl">
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    className="h-full w-full object-cover"
-                  />
+                <div className="aspect-square overflow-hidden rounded-xl border border-white/10 bg-neutral-950">
+                  {renderFertigteilVisual(item)}
                 </div>
 
                 <h3 className="mt-4 text-lg">{item.name}</h3>
@@ -202,22 +218,15 @@ Viele Grüße`;
         </section>
       </main>
 
-      {/* FOOTER (FIX) */}
+      {/* FOOTER */}
       <footer className="mt-20 border-t border-white/10">
         <div className="mx-auto flex max-w-7xl flex-col gap-4 px-6 py-8 text-neutral-500 md:flex-row md:items-center md:justify-between">
           <div className="flex items-center gap-4">
-            <img
-              src="/logo.png"
-              alt="Glück Engineering Logo"
-              className="h-16 w-16 object-contain"
-            />
+            <img src="/logo.png" className="h-16 w-16 object-contain" />
             <span>© Glück Engineering</span>
           </div>
 
-          <a
-            href={contactLink}
-            className="text-sm transition hover:text-white"
-          >
+          <a href={contactLink} className="text-sm hover:text-white">
             {contactEmail}
           </a>
         </div>
