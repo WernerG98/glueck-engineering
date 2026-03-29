@@ -8,6 +8,13 @@ export default function GlueckEngineeringWebsite() {
       name: "Führung für Blende / unterer Kühlergrill VW T4 (langer Vorderwagen)",
       image: "/placeholder.png",
       text: "Passgenaue Führung für den unteren Kühlergrill beim VW T4.",
+      type: "product",
+    },
+    {
+      name: "3D-Druck",
+      imageType: "service",
+      text: "Individuelle 3D-Drucklösungen für funktionale Bauteile, Prototypen und Sonderanfertigungen.",
+      type: "service",
     },
   ];
 
@@ -42,6 +49,26 @@ Viele Grüße`;
     )}&body=${encodeURIComponent(body)}`;
   };
 
+  const buildServiceRequestLink = () => {
+    const body = `Hallo,
+
+ich interessiere mich für eine individuelle 3D-Drucklösung.
+
+Name:
+E-Mail:
+
+Was soll gedruckt werden?
+Materialwunsch:
+Einsatzbereich:
+Weitere Infos:
+
+Viele Grüße`;
+
+    return `mailto:${contactEmail}?subject=${encodeURIComponent(
+      "Anfrage: 3D-Druck"
+    )}&body=${encodeURIComponent(body)}`;
+  };
+
   const buildCustomRequestLink = () => {
     const body = `Hallo,
 
@@ -60,6 +87,26 @@ Viele Grüße`;
   };
 
   const contactLink = `mailto:${contactEmail}`;
+
+  const renderFertigteilVisual = (item) => {
+    if (item.imageType === "service") {
+      return (
+        <div className="flex h-full w-full items-center justify-center bg-neutral-950">
+          <span className="text-sm uppercase tracking-[0.25em] text-white">
+            3D Druck
+          </span>
+        </div>
+      );
+    }
+
+    return (
+      <img
+        src={item.image}
+        alt={item.name}
+        className="h-full w-full object-cover"
+      />
+    );
+  };
 
   return (
     <div className="min-h-screen bg-neutral-950 text-white">
@@ -124,18 +171,18 @@ Viele Grüße`;
                 className="flex flex-col rounded-2xl border border-white/10 bg-neutral-900 p-6"
               >
                 <div className="aspect-square overflow-hidden rounded-xl border border-white/10 bg-neutral-950">
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    className="h-full w-full object-cover"
-                  />
+                  {renderFertigteilVisual(item)}
                 </div>
 
                 <h3 className="mt-4 text-lg">{item.name}</h3>
                 <p className="mt-2 text-sm text-neutral-400">{item.text}</p>
 
                 <a
-                  href={buildProductRequestLink(item.name)}
+                  href={
+                    item.type === "service"
+                      ? buildServiceRequestLink()
+                      : buildProductRequestLink(item.name)
+                  }
                   className="mt-6 inline-block rounded-xl bg-neutral-700 py-3 text-center transition hover:bg-neutral-600"
                 >
                   Anfrage senden
