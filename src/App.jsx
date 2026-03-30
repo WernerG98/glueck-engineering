@@ -355,7 +355,7 @@ export default function GlueckEngineeringWebsite() {
 
     <div className="overflow-hidden rounded-2xl border border-white/10">
       <img
-        src="/3D-Druck_S54.png"
+        src="/3D-Druck_S54_Ergebnis.jpg"
         alt="3D-Druck Dienstleistung"
         className="h-full w-full object-cover"
       />
@@ -441,7 +441,7 @@ export default function GlueckEngineeringWebsite() {
               <div className="mt-6 flex justify-center">
                 <div className="w-full max-w-md overflow-hidden rounded-2xl border border-white/10">
                   <img
-                    src="/Artwork_Kein_Leben_bleibt_Ergebnis.jpg"
+                    src="/Artwork_Kein_Leben_Bleibt_Ergebnis.jpg"
                     alt="Fertig gedrucktes Artwork"
                     className="h-full w-full object-cover"
                   />
