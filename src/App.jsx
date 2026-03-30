@@ -319,26 +319,29 @@ export default function GlueckEngineeringWebsite() {
           </div>
         </section>
 
-       <section className="mt-20">
+<section className="mt-20">
   <div className="grid gap-8 rounded-2xl border border-white/10 bg-neutral-900 p-10 md:grid-cols-2 md:items-center">
     <div className="text-left">
-      <h2 className="text-2xl font-semibold">3D-Druck Dienstleistung</h2>
+      <h2 className="text-2xl font-semibold">3D-Druck und Dienstleistungen</h2>
 
       <p className="mt-4 text-neutral-400">
-        Wir bieten individuelle 3D-Drucklösungen für funktionale
-        Bauteile, Prototypen und Sonderanfertigungen.
+        Wir bieten individuelle 3D-Drucklösungen für funktionale Bauteile, Prototypen und Kleinserien.
+        Der Leistungsumfang reicht von der technischen Beratung über Konstruktion und Optimierung bis hin zur fertigen Bauteilproduktion.
         <br />
         <br />
-        Verfügbare Materialien sind unter anderem PLA, PETG, TPU, ABS,
-        ASA, PC, PA sowie faserverstärkte Varianten, beispielsweise mit
-        Carbon.
+        Neben der reinen Fertigung unterstützen wir bei der Auslegung von Bauteilen hinsichtlich mechanischer Belastung, Temperaturbeständigkeit und Umgebungsbedingungen wie UV-Einwirkung oder Feuchtigkeit.
+        <br />
+        <br />
+        Verfügbare Materialien umfassen unter anderem PLA, PETG, TPU, ABS, ASA, PC, PA sowie faserverstärkte Varianten (z. B. Carbon). Je nach Anforderung lassen sich damit sowohl optische als auch hochbelastbare und temperaturbeständige Komponenten realisieren.
+        <br />
+        <br />
+        Geeignet für Einzelteile, Ersatzteile, Sonderanfertigungen sowie kleine bis mittlere Stückzahlen.
         <br />
         <br />
         Maximale Bauteilgröße: 33 × 32,5 × 32 cm.
         <br />
         <br />
-        Sende uns deine Anfrage einfach mit allen relevanten Informationen
-        zu Material, Einsatzbereich und gewünschter Stückzahl.
+        Sende uns deine Anfrage mit Informationen zu Einsatzbereich, Anforderungen und Stückzahl – wir prüfen die technische Umsetzbarkeit und erstellen ein individuelles Angebot.
       </p>
 
       <div className="mt-8 flex flex-wrap gap-4">
