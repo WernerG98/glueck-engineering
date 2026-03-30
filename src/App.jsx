@@ -507,28 +507,30 @@ export default function GlueckEngineeringWebsite() {
         </section>
       </main>
 
-      <footer className="mt-20 border-t border-white/10">
-        <div className="mx-auto max-w-7xl px-6 py-8 text-neutral-500">
-          <div className="flex flex-col items-center gap-4 md:flex-row md:items-center md:justify-between">
-            <div className="flex items-center gap-4">
-              <img
-                src="/logo.png"
-                alt="Glück Engineering Logo"
-                className="h-16 w-16 object-contain"
-              />
-              <span>© Glück Engineering</span>
-            </div>
+<footer className="mt-20 border-t border-white/10">
+  <div className="mx-auto max-w-7xl px-6 py-8 text-neutral-500">
+    <div className="flex flex-col items-center gap-4 text-center md:grid md:grid-cols-3 md:items-center md:text-left">
+      <div className="flex items-center justify-center gap-4 md:justify-start">
+        <img
+          src="/logo.png"
+          alt="Glück Engineering Logo"
+          className="h-16 w-16 object-contain"
+        />
+        <span>© Glück Engineering</span>
+      </div>
 
-            <a href={contactLink} className="text-sm hover:text-white">
-              {contactEmail}
-            </a>
-          </div>
+      <div className="text-sm text-center">
+        Inhaber M.Eng. Werner Glück
+      </div>
 
-          <div className="mt-6 text-center text-sm">
-            Inhaber M.Eng. Werner Glück
-          </div>
-        </div>
-      </footer>
+      <div className="flex justify-center md:justify-end">
+        <a href={contactLink} className="text-sm hover:text-white">
+          {contactEmail}
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
 
       {selectedImage && (
         <div
