@@ -152,7 +152,7 @@ Nachricht: ${notes || "-"}
     }
 
     const emailPayload = {
-      from: "Glück Engineering <info@glueckengineering.com>",
+      from: "Glück Engineering <werner.glueck@gmx.net>",
       to: ["info@glueckengineering.com"],
       reply_to: email,
       subject: `Neue Anfrage: ${subject}`,
