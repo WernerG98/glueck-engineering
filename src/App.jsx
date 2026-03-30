@@ -274,7 +274,7 @@ export default function GlueckEngineeringWebsite() {
                 <br />
                 Maximale Bauteilgröße: 33 × 32,5 × 32 cm.
                 <br />
-                Preise ab 19,99 € für Schwarz-Weiß beziehungsweise ab 29,99 € für
+                Preise ab 19,99 € für Schwarz-Weiß beziehungsweise ab 29,99 € (zzgl. Versand) für
                 mehrfarbige Ausführungen.
                 <br />
                 <br />
@@ -328,7 +328,7 @@ export default function GlueckEngineeringWebsite() {
   Wir bieten individuelle 3D-Drucklösungen für funktionale Bauteile, Prototypen und Kleinserien.
   <br />
   <br />
-  Du hast bereits eine fertige Datei? Dann sende uns einfach dein Modell – wir übernehmen den Druck und liefern das Bauteil direkt zu dir.
+  Du hast bereits eine fertige Datei? Dann sende uns einfach dein Modell, wir übernehmen den Druck und liefern das Bauteil direkt zu dir.
   <br />
   <br />
   Alternativ unterstützen wir dich von der Idee bis zum fertigen Produkt: von der technischen Beratung über Konstruktion und Optimierung bis hin zur fertigen Bauteilproduktion.
