@@ -324,30 +324,34 @@ export default function GlueckEngineeringWebsite() {
     <div className="text-left">
       <h2 className="text-2xl font-semibold">3D-Druck und Dienstleistungen</h2>
 
-<p className="mt-4 text-neutral-400">
-  Wir bieten individuelle 3D-Drucklösungen für funktionale Bauteile, Prototypen und Kleinserien.
-  <br />
-  <br />
-  Du hast bereits eine fertige Datei? Dann sende uns einfach dein Modell, wir übernehmen den Druck und liefern das Bauteil direkt zu dir.
-  <br />
-  <br />
-  Alternativ unterstützen wir dich von der Idee bis zum fertigen Produkt: von der technischen Beratung über Konstruktion und Optimierung bis hin zur fertigen Bauteilproduktion.
-  <br />
-  <br />
-  Neben der reinen Fertigung unterstützen wir bei der Auslegung von Bauteilen hinsichtlich mechanischer Belastung, Temperaturbeständigkeit und Umgebungsbedingungen wie UV-Einwirkung oder Feuchtigkeit.
-  <br />
-  <br />
-  Verfügbare Materialien umfassen unter anderem PLA, PETG, TPU, ABS, ASA, PC, PA sowie faserverstärkte Varianten (z. B. Carbon). Je nach Anforderung lassen sich damit sowohl optische als auch hochbelastbare und temperaturbeständige Komponenten realisieren.
-  <br />
-  <br />
-  Geeignet für Einzelteile, Ersatzteile, Sonderanfertigungen sowie kleine bis mittlere Stückzahlen.
-  <br />
-  <br />
-  Maximale Bauteilgröße: 33 × 32,5 × 32 cm.
-  <br />
-  <br />
-  Sende uns gerne deine Anfrage. Wir prüfen die technische Umsetzbarkeit und erstellen ein individuelles Angebot.
-</p>
+      <p className="mt-3 text-lg text-white">
+        Deine Datei. Dein Bauteil. Wir übernehmen den Rest.
+      </p>
+
+      <p className="mt-4 text-neutral-400">
+        Wir bieten individuelle 3D-Drucklösungen für funktionale Bauteile, Prototypen und Kleinserien.
+        <br />
+        <br />
+        Du hast bereits eine fertige Datei? Dann sende uns einfach dein Modell, wir übernehmen den Druck und liefern das Bauteil direkt zu dir.
+        <br />
+        <br />
+        Alternativ unterstützen wir dich von der Idee bis zum fertigen Produkt: von der technischen Beratung über Konstruktion und Optimierung bis hin zur fertigen Bauteilproduktion.
+        <br />
+        <br />
+        Neben der reinen Fertigung unterstützen wir bei der Auslegung von Bauteilen hinsichtlich mechanischer Belastung, Temperaturbeständigkeit und Umgebungsbedingungen wie UV-Einwirkung oder Feuchtigkeit.
+        <br />
+        <br />
+        Verfügbare Materialien umfassen unter anderem PLA, PETG, TPU, ABS, ASA, PC, PA sowie faserverstärkte Varianten (z. B. Carbon). Je nach Anforderung lassen sich damit sowohl optische als auch hochbelastbare und temperaturbeständige Komponenten realisieren.
+        <br />
+        <br />
+        Geeignet für Einzelteile, Ersatzteile, Sonderanfertigungen sowie kleine bis mittlere Stückzahlen.
+        <br />
+        <br />
+        Maximale Bauteilgröße: 33 × 32,5 × 32 cm.
+        <br />
+        <br />
+        Sende uns gerne deine Anfrage. Wir prüfen die technische Umsetzbarkeit und erstellen ein individuelles Angebot.
+      </p>
 
       <div className="mt-8 flex flex-wrap gap-4">
         <button
@@ -369,6 +373,7 @@ export default function GlueckEngineeringWebsite() {
       />
     </div>
   </div>
+</section>
 </section>
 
         <section id="ablauf-artworks" className="mt-24">
