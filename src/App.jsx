@@ -319,37 +319,49 @@ export default function GlueckEngineeringWebsite() {
           </div>
         </section>
 
-        <section className="mt-20">
-          <div className="rounded-2xl border border-white/10 bg-neutral-900 p-10 text-center">
-            <h2 className="text-2xl font-semibold">3D-Druck Dienstleistung</h2>
+       <section className="mt-20">
+  <div className="grid gap-8 rounded-2xl border border-white/10 bg-neutral-900 p-10 md:grid-cols-2 md:items-center">
+    <div className="text-left">
+      <h2 className="text-2xl font-semibold">3D-Druck Dienstleistung</h2>
 
-            <p className="mt-4 mx-auto max-w-2xl text-neutral-400">
-              Wir bieten individuelle 3D-Drucklösungen für funktionale
-              Bauteile, Prototypen und Sonderanfertigungen.
-              <br />
-              <br />
-              Verfügbare Materialien sind unter anderem PLA, PETG, TPU, ABS,
-              ASA, PC, PA sowie faserverstärkte Varianten, beispielsweise mit
-              Carbon.
-              <br />
-              <br />
-              Maximale Bauteilgröße: 33 × 32,5 × 32 cm.
-              <br />
-              <br />
-              Sende uns deine Anfrage einfach mit allen relevanten Informationen
-              zu Material, Einsatzbereich und gewünschter Stückzahl.
-            </p>
+      <p className="mt-4 text-neutral-400">
+        Wir bieten individuelle 3D-Drucklösungen für funktionale
+        Bauteile, Prototypen und Sonderanfertigungen.
+        <br />
+        <br />
+        Verfügbare Materialien sind unter anderem PLA, PETG, TPU, ABS,
+        ASA, PC, PA sowie faserverstärkte Varianten, beispielsweise mit
+        Carbon.
+        <br />
+        <br />
+        Maximale Bauteilgröße: 33 × 32,5 × 32 cm.
+        <br />
+        <br />
+        Sende uns deine Anfrage einfach mit allen relevanten Informationen
+        zu Material, Einsatzbereich und gewünschter Stückzahl.
+      </p>
 
-            <button
-              onClick={() =>
-                openContactModal("3D-Druck Dienstleistung", "service")
-              }
-              className="mt-8 inline-block rounded-xl bg-neutral-700 px-6 py-3 transition hover:bg-neutral-600"
-            >
-              Anfrage senden
-            </button>
-          </div>
-        </section>
+      <div className="mt-8 flex flex-wrap gap-4">
+        <button
+          onClick={() =>
+            openContactModal("3D-Druck Dienstleistung", "service")
+          }
+          className="inline-block rounded-xl bg-neutral-700 px-6 py-3 transition hover:bg-neutral-600"
+        >
+          Anfrage senden
+        </button>
+      </div>
+    </div>
+
+    <div className="overflow-hidden rounded-2xl border border-white/10">
+      <img
+        src="/3D-Druck_S54.png"
+        alt="3D-Druck Dienstleistung"
+        className="h-full w-full object-cover"
+      />
+    </div>
+  </div>
+</section>
 
         <section id="ablauf-artworks" className="mt-24">
           <h2 className="mb-8 text-2xl font-semibold">
