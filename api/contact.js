@@ -152,7 +152,7 @@ Nachricht: ${notes || "-"}
     }
 
     const emailPayload = {
-      from: "Glück Engineering <info@glueckengineering.com>",
+      from: "Glück Engineering <anfrage@glueckengineering.com>",
       to: ["info@glueckengineering.com"],
       reply_to: email,
       subject: `Neue Anfrage: ${subject}`,
@@ -178,9 +178,18 @@ Nachricht: ${notes || "-"}
       ];
     }
 
-    await resend.emails.send(emailPayload);
+    const { data, error } = await resend.emails.send(emailPayload);
 
-    return res.status(200).json({ success: true });
+    if (error) {
+      console.error("RESEND_SEND_ERROR", error);
+      return res.status(500).json({
+        error: error.message || "E-Mail konnte nicht versendet werden.",
+      });
+    }
+
+    console.log("RESEND_SEND_SUCCESS", data);
+
+    return res.status(200).json({ success: true, data });
   } catch (error) {
     console.error("CONTACT_API_ERROR", error);
     return res.status(500).json({
