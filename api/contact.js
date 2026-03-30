@@ -24,6 +24,27 @@ async function readRequestBody(req) {
   });
 }
 
+function buildCustomerMessage(name, subject, type) {
+  let typeText = "deine Anfrage";
+
+  if (type === "product") typeText = `deine Anfrage zum Produkt "${subject}"`;
+  if (type === "custom") typeText = 'deine Anfrage zu einem individuellen 3D-Artwork';
+  if (type === "service") typeText = "deine Anfrage zur 3D-Druck Dienstleistung";
+
+  return `Hallo ${name},
+
+vielen Dank für ${typeText}.
+
+Deine Nachricht ist bei Glück Engineering eingegangen und wird zeitnah bearbeitet.
+Ich melde mich so schnell wie möglich bei dir zurück.
+
+Viele Grüße
+Glück Engineering
+
+E-Mail: info@glueckengineering.com
+Website: glueckengineering.com`;
+}
+
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Methode nicht erlaubt." });
@@ -77,7 +98,7 @@ export default async function handler(req, res) {
       });
     }
 
-    let text = `Neue Anfrage über die Website
+    let adminText = `Neue Anfrage über die Website
 
 Betreff: ${subject}
 Typ: ${type}
@@ -96,7 +117,7 @@ Telefon: ${phone || "-"}
         });
       }
 
-      text += `Produktanfrage
+      adminText += `Produktanfrage
 Produkt: ${subject}
 Anzahl der benötigten Teile: ${quantity}
 Weitere Informationen: ${notes || "-"}
@@ -120,7 +141,7 @@ Weitere Informationen: ${notes || "-"}
         });
       }
 
-      text += `Individuelles 3D-Artwork
+      adminText += `Individuelles 3D-Artwork
 Ausführung: ${artworkColorMode}
 Abmessungen: ${artworkWidth} cm × ${artworkHeight} cm
 Rahmen gewünscht: ${artworkFrame}
@@ -139,24 +160,24 @@ Motiv / Hinweise: ${notes || "-"}
         });
       }
 
-      text += `3D-Druck Dienstleistung
+      adminText += `3D-Druck Dienstleistung
 Gewünschtes Material: ${serviceMaterial}
 Einsatzbereich: ${serviceApplication}
 Anzahl: ${serviceQuantity}
 Weitere Informationen: ${notes || "-"}
 `;
     } else {
-      text += `Allgemeine Anfrage
+      adminText += `Allgemeine Anfrage
 Nachricht: ${notes || "-"}
 `;
     }
 
-    const emailPayload = {
+    const adminEmailPayload = {
       from: "Glück Engineering <anfrage@glueckengineering.com>",
       to: ["info@glueckengineering.com"],
       reply_to: email,
       subject: `Neue Anfrage: ${subject}`,
-      text,
+      text: adminText,
     };
 
     if (file && typeof file === "object" && "arrayBuffer" in file && file.size > 0) {
@@ -170,7 +191,7 @@ Nachricht: ${notes || "-"}
 
       const buffer = Buffer.from(await file.arrayBuffer());
 
-      emailPayload.attachments = [
+      adminEmailPayload.attachments = [
         {
           filename: file.name,
           content: buffer.toString("base64"),
@@ -178,18 +199,34 @@ Nachricht: ${notes || "-"}
       ];
     }
 
-    const { data, error } = await resend.emails.send(emailPayload);
+    const { error: adminError } = await resend.emails.send(adminEmailPayload);
 
-    if (error) {
-      console.error("RESEND_SEND_ERROR", error);
+    if (adminError) {
+      console.error("RESEND_ADMIN_SEND_ERROR", adminError);
       return res.status(500).json({
-        error: error.message || "E-Mail konnte nicht versendet werden.",
+        error: adminError.message || "Admin-E-Mail konnte nicht versendet werden.",
       });
     }
 
-    console.log("RESEND_SEND_SUCCESS", data);
+    const customerText = buildCustomerMessage(name, subject, type);
 
-    return res.status(200).json({ success: true, data });
+    const customerEmailPayload = {
+      from: "Glück Engineering <anfrage@glueckengineering.com>",
+      to: [email],
+      subject: "Deine Anfrage bei Glück Engineering",
+      text: customerText,
+    };
+
+    const { error: customerError } = await resend.emails.send(customerEmailPayload);
+
+    if (customerError) {
+      console.error("RESEND_CUSTOMER_SEND_ERROR", customerError);
+    }
+
+    return res.status(200).json({
+      success: true,
+      customerConfirmationSent: !customerError,
+    });
   } catch (error) {
     console.error("CONTACT_API_ERROR", error);
     return res.status(500).json({
