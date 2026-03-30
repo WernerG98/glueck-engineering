@@ -519,9 +519,10 @@ export default function GlueckEngineeringWebsite() {
         <span>© Glück Engineering</span>
       </div>
 
-      <div className="text-sm text-center">
-        Inhaber M.Eng. Werner Glück
-      </div>
+<div className="text-sm text-center leading-tight">
+  <div>Inhaber M.Eng. Werner Glück</div>
+  <div className="text-neutral-400">94424 Arnstorf</div>
+</div>
 
       <div className="flex justify-center md:justify-end">
         <a href={contactLink} className="text-sm hover:text-white">
