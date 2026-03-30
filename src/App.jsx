@@ -94,6 +94,11 @@ export default function GlueckEngineeringWebsite() {
       return;
     }
 
+    if (requestType === "general" && !formData.notes.trim()) {
+      alert("Bitte eine Nachricht eingeben.");
+      return;
+    }
+
     if (requestType === "product" && !formData.quantity.trim()) {
       alert("Bitte die Anzahl der benötigten Teile angeben.");
       return;
@@ -152,7 +157,7 @@ export default function GlueckEngineeringWebsite() {
       body.append("serviceApplication", formData.serviceApplication);
       body.append("serviceQuantity", formData.serviceQuantity);
 
-      if (attachment && requestType !== "product") {
+      if (attachment && requestType !== "product" && requestType !== "general") {
         body.append("attachment", attachment);
       }
 
@@ -184,7 +189,7 @@ export default function GlueckEngineeringWebsite() {
     if (item.imageType === "comingSoon") {
       return (
         <div className="flex h-full w-full items-center justify-center bg-neutral-950">
-          <span className="text-lg font-semibold uppercase tracking-[0.2em] text-white">
+          <span className="text-base font-semibold uppercase tracking-[0.2em] text-white sm:text-lg">
             Coming soon
           </span>
         </div>
@@ -203,55 +208,55 @@ export default function GlueckEngineeringWebsite() {
   return (
     <div className="min-h-screen bg-neutral-950 text-white">
       <header className="border-b border-white/10">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-6">
-          <div className="flex items-center gap-6">
+        <div className="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-4 sm:px-6 md:flex-row md:items-center md:justify-between md:py-6">
+          <div className="flex items-center gap-4 sm:gap-6">
             <img
               src="/logo.png"
               alt="Glück Engineering Logo"
-              className="h-36 w-36 object-contain"
+              className="h-16 w-16 object-contain sm:h-20 sm:w-20 md:h-28 md:w-28"
             />
-            <span className="text-2xl font-semibold md:text-3xl">
+            <span className="text-xl font-semibold sm:text-2xl md:text-3xl">
               Glück Engineering
             </span>
           </div>
 
           <button
             onClick={() => openContactModal("Allgemeine Anfrage", "general")}
-            className="rounded-xl border border-white/10 px-6 py-3 transition hover:bg-white/5"
+            className="w-full rounded-xl border border-white/10 px-6 py-3 transition hover:bg-white/5 md:w-auto"
           >
             Kontakt
           </button>
         </div>
       </header>
 
-      <main className="mx-auto max-w-7xl px-6 py-20">
+      <main className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 md:py-20">
         <section>
-          <h1 className="text-4xl font-semibold md:text-6xl">
+          <h1 className="text-3xl font-semibold leading-tight sm:text-4xl md:text-6xl">
             Teile, die funktionieren.
             <br />
             Designs, die auffallen.
           </h1>
 
-          <p className="mt-6 max-w-2xl text-neutral-400">
+          <p className="mt-6 max-w-2xl text-sm text-neutral-400 sm:text-base">
             Individuelle Fertigteile, 3D-Artworks und technische
             3D-Drucklösungen aus einer Hand.
           </p>
         </section>
 
-        <section className="mt-24">
-          <h2 className="mb-8 text-2xl font-semibold">Fertigteile</h2>
+        <section className="mt-16 sm:mt-20 md:mt-24">
+          <h2 className="mb-6 text-2xl font-semibold sm:mb-8">Fertigteile</h2>
 
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {fertigteile.map((item, index) => (
               <div
                 key={index}
-                className="flex flex-col rounded-2xl border border-white/10 bg-neutral-900 p-6"
+                className="flex flex-col rounded-2xl border border-white/10 bg-neutral-900 p-5 sm:p-6"
               >
                 <div className="aspect-square overflow-hidden rounded-xl border border-white/10 bg-neutral-950">
                   {renderFertigteilVisual(item)}
                 </div>
 
-                <h3 className="mt-4 text-lg">{item.name}</h3>
+                <h3 className="mt-4 text-base sm:text-lg">{item.name}</h3>
                 <p className="mt-2 text-sm text-neutral-400">{item.text}</p>
 
                 <button
@@ -265,14 +270,14 @@ export default function GlueckEngineeringWebsite() {
           </div>
         </section>
 
-        <section className="mt-24">
-          <div className="grid gap-8 rounded-2xl border border-white/10 bg-neutral-900 p-10 md:grid-cols-2 md:items-center">
+        <section className="mt-16 sm:mt-20 md:mt-24">
+          <div className="grid gap-6 rounded-2xl border border-white/10 bg-neutral-900 p-6 sm:gap-8 sm:p-8 md:grid-cols-2 md:items-center md:p-10">
             <div className="text-left">
               <h2 className="text-2xl font-semibold">
                 Individuelles 3D-Bild aus deinem Motiv
               </h2>
 
-              <p className="mt-4 text-neutral-400">
+              <p className="mt-4 text-sm text-neutral-400 sm:text-base">
                 Wir verwandeln dein Motiv in ein mehrschichtiges 3D-Artwork mit
                 klarer Tiefenwirkung. Möglich sind sowohl schwarz-weiße
                 Ausführungen als auch mehrfarbige Varianten mit bis zu sechs
@@ -290,26 +295,26 @@ export default function GlueckEngineeringWebsite() {
                 Motiv verfügst.
               </p>
 
-              <div className="mt-8 flex flex-wrap gap-4">
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                 <button
                   onClick={() =>
                     openContactModal("Individuelles 3D-Artwork", "custom")
                   }
-                  className="inline-block rounded-xl bg-neutral-700 px-6 py-3 transition hover:bg-neutral-600"
+                  className="inline-block rounded-xl bg-neutral-700 px-6 py-3 text-center transition hover:bg-neutral-600"
                 >
                   Anfrage senden
                 </button>
 
                 <a
                   href="#ablauf-artworks"
-                  className="inline-block rounded-xl border border-white/10 px-6 py-3 transition hover:bg-white/5"
+                  className="inline-block rounded-xl border border-white/10 px-6 py-3 text-center transition hover:bg-white/5"
                 >
                   Zum Ablauf
                 </a>
 
                 <a
                   href="#galerie"
-                  className="inline-block rounded-xl border border-white/10 px-6 py-3 transition hover:bg-white/5"
+                  className="inline-block rounded-xl border border-white/10 px-6 py-3 text-center transition hover:bg-white/5"
                 >
                   Zur Galerie
                 </a>
@@ -320,14 +325,14 @@ export default function GlueckEngineeringWebsite() {
               <img
                 src="/Artwork_Stanced_E46.png"
                 alt="3D Artwork BMW E46"
-                className="h-full w-full object-cover"
+                className="h-64 w-full object-cover sm:h-80 md:h-full"
               />
             </div>
           </div>
         </section>
 
-        <section className="mt-20">
-          <div className="grid gap-8 rounded-2xl border border-white/10 bg-neutral-900 p-10 md:grid-cols-2 md:items-center">
+        <section className="mt-16 sm:mt-20">
+          <div className="grid gap-6 rounded-2xl border border-white/10 bg-neutral-900 p-6 sm:gap-8 sm:p-8 md:grid-cols-2 md:items-center md:p-10">
             <div className="text-left">
               <h2 className="text-2xl font-semibold">
                 3D-Druck und Dienstleistungen
@@ -337,7 +342,7 @@ export default function GlueckEngineeringWebsite() {
                 Deine Datei. Dein Bauteil. Wir übernehmen den Rest.
               </p>
 
-              <p className="mt-4 text-neutral-400">
+              <p className="mt-4 text-sm text-neutral-400 sm:text-base">
                 Wir bieten individuelle 3D-Drucklösungen für funktionale
                 Bauteile, Prototypen und Kleinserien.
                 <br />
@@ -376,12 +381,12 @@ export default function GlueckEngineeringWebsite() {
                 Umsetzbarkeit und erstellen ein individuelles Angebot.
               </p>
 
-              <div className="mt-8 flex flex-wrap gap-4">
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                 <button
                   onClick={() =>
                     openContactModal("3D-Druck Dienstleistung", "service")
                   }
-                  className="inline-block rounded-xl bg-neutral-700 px-6 py-3 transition hover:bg-neutral-600"
+                  className="inline-block rounded-xl bg-neutral-700 px-6 py-3 text-center transition hover:bg-neutral-600"
                 >
                   Anfrage senden
                 </button>
@@ -392,30 +397,30 @@ export default function GlueckEngineeringWebsite() {
               <img
                 src="/3D-Druck_S54_Ergebnis.jpg"
                 alt="3D-Druck Dienstleistung"
-                className="h-full w-full object-cover"
+                className="h-64 w-full object-cover sm:h-80 md:h-full"
               />
             </div>
           </div>
         </section>
 
-        <section id="ablauf-artworks" className="mt-24">
-          <h2 className="mb-8 text-2xl font-semibold">
+        <section id="ablauf-artworks" className="mt-16 sm:mt-20 md:mt-24">
+          <h2 className="mb-6 text-2xl font-semibold sm:mb-8">
             Ablauf für individuelle 3D-Artworks
           </h2>
 
-          <div className="space-y-8">
-            <div className="rounded-2xl border border-white/10 bg-neutral-900 p-8">
+          <div className="space-y-6 sm:space-y-8">
+            <div className="rounded-2xl border border-white/10 bg-neutral-900 p-6 sm:p-8">
               <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-full bg-neutral-800 text-lg font-semibold">
                 1
               </div>
-              <h3 className="text-xl font-semibold">
+              <h3 className="text-lg font-semibold sm:text-xl">
                 Du sendest uns dein Bild und deine Wünsche
               </h3>
-              <p className="mt-3 text-neutral-400">
+              <p className="mt-3 text-sm text-neutral-400 sm:text-base">
                 Sende uns dein Motiv als JPG, PNG, WEBP oder SVG und teile uns
                 folgende Informationen mit:
               </p>
-              <div className="mt-4 space-y-2 text-neutral-300">
+              <div className="mt-4 space-y-2 text-sm text-neutral-300 sm:text-base">
                 <p>• Schwarz-Weiß oder Farbe</p>
                 <p>• Gewünschte Abmessungen</p>
                 <p>• Rahmen gewünscht oder nicht</p>
@@ -424,14 +429,14 @@ export default function GlueckEngineeringWebsite() {
               </div>
             </div>
 
-            <div className="rounded-2xl border border-white/10 bg-neutral-900 p-8">
+            <div className="rounded-2xl border border-white/10 bg-neutral-900 p-6 sm:p-8">
               <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-full bg-neutral-800 text-lg font-semibold">
                 2
               </div>
-              <h3 className="text-xl font-semibold">
+              <h3 className="text-lg font-semibold sm:text-xl">
                 Wir prüfen deine Angaben und erstellen einen Vorabentwurf
               </h3>
-              <p className="mt-3 text-neutral-400">
+              <p className="mt-3 text-sm text-neutral-400 sm:text-base">
                 Auf Basis deiner Angaben prüfen wir die Umsetzbarkeit und senden
                 dir vor dem Druck einen Vorabentwurf inklusive Preis zu. So
                 siehst du bereits vorab, wie das spätere Artwork aussehen wird.
@@ -448,27 +453,27 @@ export default function GlueckEngineeringWebsite() {
               </div>
             </div>
 
-            <div className="rounded-2xl border border-white/10 bg-neutral-900 p-8">
+            <div className="rounded-2xl border border-white/10 bg-neutral-900 p-6 sm:p-8">
               <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-full bg-neutral-800 text-lg font-semibold">
                 3
               </div>
-              <h3 className="text-xl font-semibold">
+              <h3 className="text-lg font-semibold sm:text-xl">
                 Du gibst das Angebot frei
               </h3>
-              <p className="mt-3 text-neutral-400">
+              <p className="mt-3 text-sm text-neutral-400 sm:text-base">
                 Erst wenn du mit Entwurf und Preis einverstanden bist,
                 bestätigst du das Angebot. Vorher wird nichts produziert.
               </p>
             </div>
 
-            <div className="rounded-2xl border border-white/10 bg-neutral-900 p-8">
+            <div className="rounded-2xl border border-white/10 bg-neutral-900 p-6 sm:p-8">
               <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-full bg-neutral-800 text-lg font-semibold">
                 4
               </div>
-              <h3 className="text-xl font-semibold">
+              <h3 className="text-lg font-semibold sm:text-xl">
                 Wir fertigen dein Artwork und verschicken es
               </h3>
-              <p className="mt-3 text-neutral-400">
+              <p className="mt-3 text-sm text-neutral-400 sm:text-base">
                 Nach deiner Freigabe fertigen wir das Produkt und versenden es
                 anschließend sorgfältig verpackt an dich.
               </p>
@@ -486,10 +491,10 @@ export default function GlueckEngineeringWebsite() {
           </div>
         </section>
 
-        <section id="galerie" className="mt-24">
-          <h2 className="mb-8 text-2xl font-semibold">Galerie</h2>
+        <section id="galerie" className="mt-16 sm:mt-20 md:mt-24">
+          <h2 className="mb-6 text-2xl font-semibold sm:mb-8">Galerie</h2>
 
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {galleryImages.map((image, index) => (
               <button
                 key={index}
@@ -507,35 +512,35 @@ export default function GlueckEngineeringWebsite() {
         </section>
       </main>
 
-<footer className="mt-20 border-t border-white/10">
-  <div className="mx-auto max-w-7xl px-6 py-8 text-neutral-500">
-    <div className="flex flex-col items-center gap-4 text-center md:grid md:grid-cols-3 md:items-center md:text-left">
-      <div className="flex items-center justify-center gap-4 md:justify-start">
-        <img
-          src="/logo.png"
-          alt="Glück Engineering Logo"
-          className="h-16 w-16 object-contain"
-        />
-        <span>© Glück Engineering</span>
-      </div>
+      <footer className="mt-16 border-t border-white/10 sm:mt-20">
+        <div className="mx-auto max-w-7xl px-4 py-8 text-neutral-500 sm:px-6">
+          <div className="flex flex-col items-center gap-4 text-center md:grid md:grid-cols-3 md:items-center md:text-left">
+            <div className="flex items-center justify-center gap-4 md:justify-start">
+              <img
+                src="/logo.png"
+                alt="Glück Engineering Logo"
+                className="h-14 w-14 object-contain md:h-16 md:w-16"
+              />
+              <span>© Glück Engineering</span>
+            </div>
 
-<div className="text-sm text-center leading-tight">
-  <div>Inhaber M.Eng. Werner Glück</div>
-  <div className="text-neutral-400">94424 Arnstorf</div>
-</div>
+            <div className="text-sm text-center leading-tight">
+              <div>Inhaber M.Eng. Werner Glück</div>
+              <div className="text-neutral-400">94424 Arnstorf</div>
+            </div>
 
-      <div className="flex justify-center md:justify-end">
-        <a href={contactLink} className="text-sm hover:text-white">
-          {contactEmail}
-        </a>
-      </div>
-    </div>
-  </div>
-</footer>
+            <div className="flex justify-center md:justify-end">
+              <a href={contactLink} className="text-sm hover:text-white">
+                {contactEmail}
+              </a>
+            </div>
+          </div>
+        </div>
+      </footer>
 
       {selectedImage && (
         <div
-          className="fixed inset-0 flex items-center justify-center bg-black/90 px-4 py-8"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 px-4 py-8"
           onClick={() => setSelectedImage(null)}
         >
           <img
@@ -547,10 +552,12 @@ export default function GlueckEngineeringWebsite() {
       )}
 
       {contactModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 px-4 py-8">
-          <div className="w-full max-w-2xl rounded-2xl border border-white/10 bg-neutral-900 p-6">
-            <div className="flex items-center justify-between">
-              <h2 className="text-2xl font-semibold">{requestSubject}</h2>
+        <div className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/80 px-4 py-6 sm:items-center sm:py-8">
+          <div className="w-full max-w-2xl rounded-2xl border border-white/10 bg-neutral-900 p-4 sm:p-6">
+            <div className="flex items-center justify-between gap-4">
+              <h2 className="text-xl font-semibold sm:text-2xl">
+                {requestSubject}
+              </h2>
               <button
                 onClick={closeContactModal}
                 className="rounded-lg px-3 py-2 text-neutral-400 transition hover:bg-white/5 hover:text-white"
@@ -814,7 +821,7 @@ export default function GlueckEngineeringWebsite() {
               )}
             </div>
 
-            <div className="mt-6 flex flex-wrap justify-end gap-4">
+            <div className="mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:flex-wrap sm:justify-end">
               <button
                 onClick={closeContactModal}
                 className="rounded-xl border border-white/10 px-6 py-3 transition hover:bg-white/5"
