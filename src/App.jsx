@@ -374,7 +374,6 @@ export default function GlueckEngineeringWebsite() {
     </div>
   </div>
 </section>
-</section>
 
         <section id="ablauf-artworks" className="mt-24">
           <h2 className="mb-8 text-2xl font-semibold">
