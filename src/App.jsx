@@ -214,6 +214,13 @@ export default function GlueckEngineeringWebsite() {
               Glück Engineering
             </span>
           </div>
+
+          <button
+            onClick={() => openContactModal("Allgemeine Anfrage", "general")}
+            className="rounded-xl border border-white/10 px-6 py-3 transition hover:bg-white/5"
+          >
+            Kontakt
+          </button>
         </div>
       </header>
 
@@ -274,8 +281,8 @@ export default function GlueckEngineeringWebsite() {
                 <br />
                 Maximale Abmessungen: 30 × 30 cm.
                 <br />
-                Preise ab 19,99 € für Schwarz-Weiß beziehungsweise ab 29,99 € (zzgl. Versand) für
-                mehrfarbige Ausführungen.
+                Preise ab 19,99 € für Schwarz-Weiß beziehungsweise ab 29,99 €
+                (zzgl. Versand) für mehrfarbige Ausführungen.
                 <br />
                 <br />
                 Sende uns dein Bild einfach per Anfrage. Mit der Übermittlung
@@ -319,61 +326,77 @@ export default function GlueckEngineeringWebsite() {
           </div>
         </section>
 
-<section className="mt-20">
-  <div className="grid gap-8 rounded-2xl border border-white/10 bg-neutral-900 p-10 md:grid-cols-2 md:items-center">
-    <div className="text-left">
-      <h2 className="text-2xl font-semibold">3D-Druck und Dienstleistungen</h2>
+        <section className="mt-20">
+          <div className="grid gap-8 rounded-2xl border border-white/10 bg-neutral-900 p-10 md:grid-cols-2 md:items-center">
+            <div className="text-left">
+              <h2 className="text-2xl font-semibold">
+                3D-Druck und Dienstleistungen
+              </h2>
 
-      <p className="mt-3 text-lg text-white">
-        Deine Datei. Dein Bauteil. Wir übernehmen den Rest.
-      </p>
+              <p className="mt-3 text-lg text-white">
+                Deine Datei. Dein Bauteil. Wir übernehmen den Rest.
+              </p>
 
-      <p className="mt-4 text-neutral-400">
-        Wir bieten individuelle 3D-Drucklösungen für funktionale Bauteile, Prototypen und Kleinserien.
-        <br />
-        <br />
-        Du hast bereits eine fertige Datei? Dann sende uns einfach dein Modell, wir übernehmen den Druck und liefern das Bauteil direkt zu dir.
-        <br />
-        <br />
-        Alternativ unterstützen wir dich von der Idee bis zum fertigen Produkt: von der technischen Beratung über Konstruktion und Optimierung bis hin zur fertigen Bauteilproduktion.
-        <br />
-        <br />
-        Neben der reinen Fertigung unterstützen wir bei der Auslegung von Bauteilen hinsichtlich mechanischer Belastung, Temperaturbeständigkeit und Umgebungsbedingungen wie UV-Einwirkung oder Feuchtigkeit.
-        <br />
-        <br />
-        Verfügbare Materialien umfassen unter anderem PLA, PETG, TPU, ABS, ASA, PC, PA sowie faserverstärkte Varianten (z. B. Carbon). Je nach Anforderung lassen sich damit sowohl optische als auch hochbelastbare und temperaturbeständige Komponenten realisieren.
-        <br />
-        <br />
-        Geeignet für Einzelteile, Ersatzteile, Sonderanfertigungen sowie kleine bis mittlere Stückzahlen.
-        <br />
-        <br />
-        Maximale Bauteilgröße: 33 × 32,5 × 32 cm.
-        <br />
-        <br />
-        Sende uns gerne deine Anfrage. Wir prüfen die technische Umsetzbarkeit und erstellen ein individuelles Angebot.
-      </p>
+              <p className="mt-4 text-neutral-400">
+                Wir bieten individuelle 3D-Drucklösungen für funktionale
+                Bauteile, Prototypen und Kleinserien.
+                <br />
+                <br />
+                Du hast bereits eine fertige Datei? Dann sende uns einfach dein
+                Modell, wir übernehmen den Druck und liefern das Bauteil direkt
+                zu dir.
+                <br />
+                <br />
+                Alternativ unterstützen wir dich von der Idee bis zum fertigen
+                Produkt: von der technischen Beratung über Konstruktion und
+                Optimierung bis hin zur fertigen Bauteilproduktion.
+                <br />
+                <br />
+                Neben der reinen Fertigung unterstützen wir bei der Auslegung
+                von Bauteilen hinsichtlich mechanischer Belastung,
+                Temperaturbeständigkeit und Umgebungsbedingungen wie
+                UV-Einwirkung oder Feuchtigkeit.
+                <br />
+                <br />
+                Verfügbare Materialien umfassen unter anderem PLA, PETG, TPU,
+                ABS, ASA, PC, PA sowie faserverstärkte Varianten (z. B.
+                Carbon). Je nach Anforderung lassen sich damit sowohl optische
+                als auch hochbelastbare und temperaturbeständige Komponenten
+                realisieren.
+                <br />
+                <br />
+                Geeignet für Einzelteile, Ersatzteile, Sonderanfertigungen
+                sowie kleine bis mittlere Stückzahlen.
+                <br />
+                <br />
+                Maximale Bauteilgröße: 33 × 32,5 × 32 cm.
+                <br />
+                <br />
+                Sende uns gerne deine Anfrage. Wir prüfen die technische
+                Umsetzbarkeit und erstellen ein individuelles Angebot.
+              </p>
 
-      <div className="mt-8 flex flex-wrap gap-4">
-        <button
-          onClick={() =>
-            openContactModal("3D-Druck Dienstleistung", "service")
-          }
-          className="inline-block rounded-xl bg-neutral-700 px-6 py-3 transition hover:bg-neutral-600"
-        >
-          Anfrage senden
-        </button>
-      </div>
-    </div>
+              <div className="mt-8 flex flex-wrap gap-4">
+                <button
+                  onClick={() =>
+                    openContactModal("3D-Druck Dienstleistung", "service")
+                  }
+                  className="inline-block rounded-xl bg-neutral-700 px-6 py-3 transition hover:bg-neutral-600"
+                >
+                  Anfrage senden
+                </button>
+              </div>
+            </div>
 
-    <div className="overflow-hidden rounded-2xl border border-white/10">
-      <img
-        src="/3D-Druck_S54_Ergebnis.jpg"
-        alt="3D-Druck Dienstleistung"
-        className="h-full w-full object-cover"
-      />
-    </div>
-  </div>
-</section>
+            <div className="overflow-hidden rounded-2xl border border-white/10">
+              <img
+                src="/3D-Druck_S54_Ergebnis.jpg"
+                alt="3D-Druck Dienstleistung"
+                className="h-full w-full object-cover"
+              />
+            </div>
+          </div>
+        </section>
 
         <section id="ablauf-artworks" className="mt-24">
           <h2 className="mb-8 text-2xl font-semibold">
@@ -485,19 +508,25 @@ export default function GlueckEngineeringWebsite() {
       </main>
 
       <footer className="mt-20 border-t border-white/10">
-        <div className="mx-auto flex max-w-7xl flex-col gap-4 px-6 py-8 text-neutral-500 md:flex-row md:items-center md:justify-between">
-          <div className="flex items-center gap-4">
-            <img
-              src="/logo.png"
-              alt="Glück Engineering Logo"
-              className="h-16 w-16 object-contain"
-            />
-            <span>© Glück Engineering</span>
+        <div className="mx-auto max-w-7xl px-6 py-8 text-neutral-500">
+          <div className="flex flex-col items-center gap-4 md:flex-row md:items-center md:justify-between">
+            <div className="flex items-center gap-4">
+              <img
+                src="/logo.png"
+                alt="Glück Engineering Logo"
+                className="h-16 w-16 object-contain"
+              />
+              <span>© Glück Engineering</span>
+            </div>
+
+            <a href={contactLink} className="text-sm hover:text-white">
+              {contactEmail}
+            </a>
           </div>
 
-          <a href={contactLink} className="text-sm hover:text-white">
-            {contactEmail}
-          </a>
+          <div className="mt-6 text-center text-sm">
+            Inhaber M.Eng. Werner Glück
+          </div>
         </div>
       </footer>
 
@@ -555,6 +584,17 @@ export default function GlueckEngineeringWebsite() {
                 placeholder="Telefon (optional)"
                 className="rounded-xl border border-white/10 bg-neutral-800 px-4 py-3 outline-none placeholder:text-neutral-500"
               />
+
+              {requestType === "general" && (
+                <textarea
+                  name="notes"
+                  value={formData.notes}
+                  onChange={handleInputChange}
+                  rows={6}
+                  placeholder="Deine Nachricht *"
+                  className="rounded-xl border border-white/10 bg-neutral-800 px-4 py-3 outline-none placeholder:text-neutral-500"
+                />
+              )}
 
               {requestType === "product" && (
                 <>
@@ -750,10 +790,11 @@ export default function GlueckEngineeringWebsite() {
                 </>
               )}
 
-              {requestType !== "product" && (
+              {requestType !== "product" && requestType !== "general" && (
                 <div className="rounded-xl border border-white/10 bg-neutral-800 px-4 py-3">
                   <label className="mb-2 block text-sm text-neutral-300">
-                    Datei anhängen {requestType === "custom" ? "(empfohlen)" : "(optional)"}
+                    Datei anhängen{" "}
+                    {requestType === "custom" ? "(empfohlen)" : "(optional)"}
                   </label>
                   <input
                     type="file"
