@@ -272,7 +272,7 @@ export default function GlueckEngineeringWebsite() {
                 Farben.
                 <br />
                 <br />
-                Maximale Bauteilgröße: 33 × 32,5 × 32 cm.
+                Maximale Abmessungen: 30 × 30 cm.
                 <br />
                 Preise ab 19,99 € für Schwarz-Weiß beziehungsweise ab 29,99 € (zzgl. Versand) für
                 mehrfarbige Ausführungen.
