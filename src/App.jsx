@@ -15,7 +15,7 @@ export default function GlueckEngineeringWebsite() {
     "/Artwork_Stanced_E46.png",
     "/Artwork_Stanced_E46_5.png",
     "/Artwork_E87.png",
-    "/Artwork_Kein_Leben_Bleibt.png",
+    "/Artwork_Kein_Leben_bleibt.png",
     "/Artwork_Foggy_Mountains.png",
     "/Artwork_Wave.png",
   ];
