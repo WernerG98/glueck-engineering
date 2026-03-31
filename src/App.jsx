@@ -14,8 +14,8 @@ export default function GlueckEngineeringWebsite() {
   const galleryImages = [
     "/Artwork_Stanced_E46.png",
     "/Artwork_Stanced_E46_5.png",
-    "/Artwork_Stanced_E46_6.png",
     "/Artwork_E87.png",
+    "/Artwork_Kein_Leben_Bleibt.png",
     "/Artwork_Foggy_Mountains.png",
     "/Artwork_Wave.png",
   ];
@@ -445,7 +445,7 @@ export default function GlueckEngineeringWebsite() {
               <div className="mt-6 flex justify-center">
                 <div className="w-full max-w-md overflow-hidden rounded-2xl border border-white/10">
                   <img
-                    src="/Artwork_Kein_Leben_bleibt.png"
+                    src="/Artwork_Stanced_E46_6.png"
                     alt="Vorabentwurf des Artworks"
                     className="h-full w-full object-cover"
                   />
@@ -481,7 +481,7 @@ export default function GlueckEngineeringWebsite() {
               <div className="mt-6 flex justify-center">
                 <div className="w-full max-w-md overflow-hidden rounded-2xl border border-white/10">
                   <img
-                    src="/Artwork_Kein_Leben_Bleibt_Ergebnis.jpg"
+                    src="/Artwork_E46_Ergebnis.jpg"
                     alt="Fertig gedrucktes Artwork"
                     className="h-full w-full object-cover"
                   />
