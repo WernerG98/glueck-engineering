@@ -5,7 +5,7 @@ export default function GlueckEngineeringWebsite() {
 
   const fertigteile = [
     {
-      name: "Führung für Blende / unterer Kühlergrill VW T4 (langer Vorderwagen)",
+      name: "VW T4 Führung für Blende / unterer Kühlergrill R+L (langer Vorderwagen)",
       image: "/Fuehrung_Blende_T4.png",
       price: "19,99 €",
       text: "Passgenaue Führung für den unteren Kühlergrill des VW T4 mit langem Vorderwagen für originale Kotflügel. Bei Nachbau-Kotflügeln sind die Laschen oft höher, die Öffnung im Halter kann einfach angepasst werden.",
