@@ -3,13 +3,33 @@ import { useState } from "react";
 export default function GlueckEngineeringWebsite() {
   const contactEmail = "info@glueckengineering.com";
 
-  const fertigteile = [
-    {
-      name: "Führung für Blende / unterer Kühlergrill VW T4 (langer Vorderwagen)",
-      imageType: "comingSoon",
-      text: "Passgenaue Führung für den unteren Kühlergrill des VW T4 mit langem Vorderwagen.",
-    },
-  ];
+const fertigteile = [
+  {
+    name: "Führung für Blende / unterer Kühlergrill VW T4 (langer Vorderwagen)",
+    image: "/Fuehrung_Blende_T4.png",
+    text: "Passgenaue Führung für den unteren Kühlergrill des VW T4 mit langem Vorderwagen.",
+  },
+];
+
+const renderFertigteilVisual = (item) => {
+  if (item.image) {
+    return (
+      <img
+        src={item.image}
+        alt={item.name}
+        className="h-full w-full object-cover"
+      />
+    );
+  }
+
+  return (
+    <div className="flex h-full w-full items-center justify-center bg-neutral-950">
+      <span className="text-base font-semibold uppercase tracking-[0.2em] text-white sm:text-lg">
+        Coming soon
+      </span>
+    </div>
+  );
+};
 
   const galleryImages = [
     "/Artwork_Stanced_E46.png",
