@@ -280,10 +280,9 @@ export default function GlueckEngineeringWebsite() {
               </h2>
 
               <p className="mt-4 text-sm text-neutral-400 sm:text-base">
-                Wir verwandeln dein Motiv in ein mehrschichtiges 3D-Artwork mit
-                klarer Tiefenwirkung. Möglich sind sowohl schwarz-weiße
-                Ausführungen als auch mehrfarbige Varianten mit bis zu sechs
-                Farben.
+                Wir verwandeln dein Motiv in ein mehrschichtiges 3D-Artwork mit ausgeprägter Tiefenwirkung.
+                Durch den schichtweisen Druck mit variierender Materialstärke entsteht eine plastische, dreidimensionale Oberfläche.
+                Realisierbar sind sowohl schwarz-weiße Ausführungen als auch mehrfarbige Varianten mit bis zu sechs Farben.
                 <br />
                 <br />
                 Maximale Abmessungen: 30 × 30 cm.
