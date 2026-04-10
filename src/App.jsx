@@ -10,6 +10,12 @@ export default function GlueckEngineeringWebsite() {
       price: "19,99 €",
       text: "Passgenaue Führung für den unteren Kühlergrill des VW T4 mit langem Vorderwagen für originale Kotflügel. Bei Nachbau-Kotflügeln sind die Laschen oft höher, die Öffnung im Halter kann einfach angepasst werden.",
     },
+    {
+      name: "Honda XRV750 RD07 Spritschutz Schwinge hinten",
+      image: "/Honda_XRV_RD07_Spritzschutz_Schwinge_hinten.png",
+      price: "24,99 €",
+      text: "Passgenaue Führung für den unteren Kühlergrill des VW T4 mit langem Vorderwagen für originale Kotflügel. Bei Nachbau-Kotflügeln sind die Laschen oft höher, die Öffnung im Halter kann einfach angepasst werden.",
+    },
   ];
 
   const galleryImages = [
