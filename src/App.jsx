@@ -14,7 +14,7 @@ export default function GlueckEngineeringWebsite() {
       name: "Honda XRV750 RD07 Spritzschutz Schwinge hinten",
       image: "/Honda_XRV_RD07_Spritzschutz_Schwinge_hinten.jpg",
       price: "24,99 €",
-      text: "Passgenaue Führung für den unteren Kühlergrill des VW T4 mit langem Vorderwagen für originale Kotflügel. Bei Nachbau-Kotflügeln sind die Laschen oft höher, die Öffnung im Halter kann einfach angepasst werden.",
+      text: "Robuster Spritzschutz für die hintere Schwinge. Gefertigt aus widerstandsfähigem Material mit erhöhter Steifigkeit gegenüber dem Originalbauteil, bleibt jedoch ausreichend flexibel, um Belastungen und Vibrationen im Fahrbetrieb zuverlässig aufzunehmen.",
     },
   ];
 
