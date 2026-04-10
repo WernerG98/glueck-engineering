@@ -1,48 +1,58 @@
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 export const config = {
   api: {
     bodyParser: false,
   },
 };
 
-async function readRequestBody(req) {
+function escapeHtml(value = "") {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+async function readFormData(req) {
+  if (typeof req.formData === "function") {
+    return req.formData();
+  }
+
+  const { IncomingForm } = await import("formidable");
+
   return new Promise((resolve, reject) => {
-    const chunks = [];
+    const form = new IncomingForm({ keepExtensions: true, multiples: false });
+    form.parse(req, (err, fields, files) => {
+      if (err) {
+        reject(err);
+        return;
+      }
 
-    req.on("data", (chunk) => {
-      chunks.push(chunk);
+      resolve({
+        get(name) {
+          const value = fields[name];
+          if (Array.isArray(value)) return value[0];
+          if (value !== undefined) return value;
+          return files[name] || null;
+        },
+      });
     });
-
-    req.on("end", () => {
-      resolve(Buffer.concat(chunks));
-    });
-
-    req.on("error", reject);
   });
 }
 
-function buildCustomerMessage(name, subject, type) {
-  let typeText = "deine Anfrage";
-
-  if (type === "product") typeText = `deine Anfrage zum Produkt "${subject}"`;
-  if (type === "custom") typeText = 'deine Anfrage zu einem individuellen 3D-Artwork';
-  if (type === "service") typeText = "deine Anfrage zur 3D-Druck Dienstleistung";
-
-  return `Hallo ${name},
-
-vielen Dank für ${typeText}.
-
-Deine Nachricht ist bei Glück Engineering eingegangen und wird zeitnah bearbeitet.
-Ich melde mich so schnell wie möglich bei dir zurück.
-
-Viele Grüße
-Glück Engineering
-
-E-Mail: info@glueckengineering.com
-Website: glueckengineering.com`;
+function buildHtmlTable(rows) {
+  return rows
+    .filter(([, value]) => value !== undefined && value !== null && String(value).trim() !== "")
+    .map(
+      ([label, value]) => `
+        <tr>
+          <td style="padding:8px 12px;border:1px solid #ddd;font-weight:600;vertical-align:top;">${escapeHtml(label)}</td>
+          <td style="padding:8px 12px;border:1px solid #ddd;vertical-align:top;white-space:pre-wrap;">${escapeHtml(value)}</td>
+        </tr>`
+    )
+    .join("");
 }
 
 export default async function handler(req, res) {
@@ -50,187 +60,104 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "Methode nicht erlaubt." });
   }
 
-  try {
-    const contentType = req.headers["content-type"] || "";
+  const apiKey = process.env.RESEND_API_KEY;
+  const toEmail = process.env.CONTACT_TO_EMAIL;
+  const fromEmail = process.env.CONTACT_FROM_EMAIL || "Glueck Engineering <onboarding@resend.dev>";
 
-    if (!contentType.includes("multipart/form-data")) {
-      return res.status(400).json({ error: "Ungültiger Request-Typ." });
-    }
-
-    const bodyBuffer = await readRequestBody(req);
-
-    const request = new Request("http://localhost", {
-      method: "POST",
-      headers: {
-        "content-type": contentType,
-      },
-      body: bodyBuffer,
-      duplex: "half",
+  if (!apiKey || !toEmail) {
+    return res.status(500).json({
+      error: "Server-Konfiguration unvollständig. Bitte RESEND_API_KEY und CONTACT_TO_EMAIL setzen.",
     });
+  }
 
-    const formData = await request.formData();
+  try {
+    const form = await readFormData(req);
 
-    const subject = String(formData.get("subject") || "Neue Anfrage");
-    const type = String(formData.get("type") || "");
-    const name = String(formData.get("name") || "");
-    const email = String(formData.get("email") || "");
-    const phone = String(formData.get("phone") || "");
-    const notes = String(formData.get("notes") || "");
+    const subject = form.get("subject") || "Allgemeine Anfrage";
+    const type = form.get("type") || "general";
+    const name = form.get("name") || "";
+    const email = form.get("email") || "";
+    const phone = form.get("phone") || "";
+    const notes = form.get("notes") || "";
+    const quantity = form.get("quantity") || "";
+    const artworkColorMode = form.get("artworkColorMode") || "";
+    const artworkWidth = form.get("artworkWidth") || "";
+    const artworkHeight = form.get("artworkHeight") || "";
+    const artworkFrame = form.get("artworkFrame") || "";
+    const artworkFrameColor = form.get("artworkFrameColor") || "";
+    const artworkQuantity = form.get("artworkQuantity") || "";
+    const serviceMaterial = form.get("serviceMaterial") || "";
+    const serviceApplication = form.get("serviceApplication") || "";
+    const serviceQuantity = form.get("serviceQuantity") || "";
 
-    const quantity = String(formData.get("quantity") || "");
+    const commonRows = [
+      ["Anfragetyp", type],
+      ["Name", name],
+      ["E-Mail", email],
+      ["Telefon", phone],
+    ];
 
-    const artworkColorMode = String(formData.get("artworkColorMode") || "");
-    const artworkWidth = String(formData.get("artworkWidth") || "");
-    const artworkHeight = String(formData.get("artworkHeight") || "");
-    const artworkFrame = String(formData.get("artworkFrame") || "");
-    const artworkFrameColor = String(formData.get("artworkFrameColor") || "");
-    const artworkQuantity = String(formData.get("artworkQuantity") || "");
-
-    const serviceMaterial = String(formData.get("serviceMaterial") || "");
-    const serviceApplication = String(formData.get("serviceApplication") || "");
-    const serviceQuantity = String(formData.get("serviceQuantity") || "");
-
-    const file = formData.get("attachment");
-
-    if (!name.trim() || !email.trim()) {
-      return res.status(400).json({
-        error: "Name und E-Mail sind Pflichtfelder.",
-      });
-    }
-
-    let adminText = `Neue Anfrage über die Website
-
-Betreff: ${subject}
-Typ: ${type}
-
-Kontaktdaten
-Name: ${name}
-E-Mail: ${email}
-Telefon: ${phone || "-"}
-
-`;
+    let specificRows = [];
 
     if (type === "product") {
-      if (!quantity.trim()) {
-        return res.status(400).json({
-          error: "Bitte die Anzahl der benötigten Teile angeben.",
-        });
-      }
-
-      adminText += `Produktanfrage
-Produkt: ${subject}
-Anzahl der benötigten Teile: ${quantity}
-Weitere Informationen: ${notes || "-"}
-`;
+      specificRows = [
+        ["Produkt", subject],
+        ["Anzahl", quantity],
+        ["Hinweise", notes],
+      ];
     } else if (type === "custom") {
-      if (
-        !artworkColorMode.trim() ||
-        !artworkWidth.trim() ||
-        !artworkHeight.trim() ||
-        !artworkFrame.trim() ||
-        !artworkQuantity.trim()
-      ) {
-        return res.status(400).json({
-          error: "Bitte alle Pflichtfelder für das individuelle 3D-Artwork ausfüllen.",
-        });
-      }
-
-      if (artworkFrame === "Ja" && !artworkFrameColor.trim()) {
-        return res.status(400).json({
-          error: "Bitte eine Rahmenfarbe auswählen.",
-        });
-      }
-
-      adminText += `Individuelles 3D-Artwork
-Ausführung: ${artworkColorMode}
-Abmessungen: ${artworkWidth} cm × ${artworkHeight} cm
-Rahmen gewünscht: ${artworkFrame}
-Rahmenfarbe: ${artworkFrame === "Ja" ? artworkFrameColor : "-"}
-Anzahl: ${artworkQuantity}
-Motiv / Hinweise: ${notes || "-"}
-`;
+      specificRows = [
+        ["Anfrage", subject],
+        ["Ausführung", artworkColorMode],
+        ["Breite in cm", artworkWidth],
+        ["Höhe in cm", artworkHeight],
+        ["Rahmen gewünscht", artworkFrame],
+        ["Rahmenfarbe", artworkFrameColor],
+        ["Anzahl", artworkQuantity],
+        ["Hinweise", notes],
+      ];
     } else if (type === "service") {
-      if (
-        !serviceMaterial.trim() ||
-        !serviceApplication.trim() ||
-        !serviceQuantity.trim()
-      ) {
-        return res.status(400).json({
-          error: "Bitte alle Pflichtfelder für die 3D-Druck Dienstleistung ausfüllen.",
-        });
-      }
-
-      adminText += `3D-Druck Dienstleistung
-Gewünschtes Material: ${serviceMaterial}
-Einsatzbereich: ${serviceApplication}
-Anzahl: ${serviceQuantity}
-Weitere Informationen: ${notes || "-"}
-`;
+      specificRows = [
+        ["Anfrage", subject],
+        ["Material", serviceMaterial],
+        ["Einsatzbereich", serviceApplication],
+        ["Anzahl", serviceQuantity],
+        ["Hinweise", notes],
+      ];
     } else {
-      adminText += `Allgemeine Anfrage
-Nachricht: ${notes || "-"}
-`;
-    }
-
-    const adminEmailPayload = {
-      from: "Glück Engineering <anfrage@glueckengineering.com>",
-      to: ["info@glueckengineering.com"],
-      reply_to: email,
-      subject: `Neue Anfrage: ${subject}`,
-      text: adminText,
-    };
-
-    if (file && typeof file === "object" && "arrayBuffer" in file && file.size > 0) {
-      const maxFileSize = 10 * 1024 * 1024;
-
-      if (file.size > maxFileSize) {
-        return res.status(400).json({
-          error: "Die angehängte Datei ist zu groß. Maximal 10 MB sind erlaubt.",
-        });
-      }
-
-      const buffer = Buffer.from(await file.arrayBuffer());
-
-      adminEmailPayload.attachments = [
-        {
-          filename: file.name,
-          content: buffer.toString("base64"),
-        },
+      specificRows = [
+        ["Anfrage", subject],
+        ["Nachricht", notes],
       ];
     }
 
-    const { error: adminError } = await resend.emails.send(adminEmailPayload);
+    const html = `
+      <div style="font-family:Arial,sans-serif;color:#111;">
+        <h2>Neue Anfrage über Glueck Engineering</h2>
+        <table style="border-collapse:collapse;width:100%;max-width:800px;">
+          ${buildHtmlTable([...commonRows, ...specificRows])}
+        </table>
+      </div>`;
 
-    if (adminError) {
-      console.error("RESEND_ADMIN_SEND_ERROR", adminError);
-      return res.status(500).json({
-        error: adminError.message || "Admin-E-Mail konnte nicht versendet werden.",
-      });
-    }
+    const textRows = [...commonRows, ...specificRows]
+      .filter(([, value]) => value !== undefined && value !== null && String(value).trim() !== "")
+      .map(([label, value]) => `${label}: ${value}`)
+      .join("\n");
 
-    const customerText = buildCustomerMessage(name, subject, type);
+    const resend = new Resend(apiKey);
 
-    const customerEmailPayload = {
-      from: "Glück Engineering <anfrage@glueckengineering.com>",
-      to: [email],
-      subject: "Deine Anfrage bei Glück Engineering",
-      text: customerText,
-    };
-
-    const { error: customerError } = await resend.emails.send(customerEmailPayload);
-
-    if (customerError) {
-      console.error("RESEND_CUSTOMER_SEND_ERROR", customerError);
-    }
-
-    return res.status(200).json({
-      success: true,
-      customerConfirmationSent: !customerError,
+    await resend.emails.send({
+      from: fromEmail,
+      to: [toEmail],
+      reply_to: email || undefined,
+      subject: `Neue Anfrage: ${subject}`,
+      html,
+      text: textRows,
     });
+
+    return res.status(200).json({ success: true });
   } catch (error) {
-    console.error("CONTACT_API_ERROR", error);
-    return res.status(500).json({
-      error: "Beim Versand ist ein Fehler aufgetreten.",
-    });
+    console.error(error);
+    return res.status(500).json({ error: "Beim Versand ist ein Fehler aufgetreten." });
   }
 }
