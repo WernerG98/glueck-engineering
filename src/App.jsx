@@ -14,7 +14,7 @@ export default function GlueckEngineeringWebsite() {
       name: "Honda XRV750 RD07 Spritzschutz Schwinge hinten",
       image: "/Honda_XRV_RD07_Spritzschutz_Schwinge_hinten.jpg",
       price: "24,99 €",
-      text: "Robuster Spritzschutz für die hintere Schwinge. Gefertigt aus widerstandsfähigem Material mit erhöhter Steifigkeit gegenüber dem Originalbauteil, bleibt jedoch ausreichend flexibel, um Belastungen und Vibrationen im Fahrbetrieb zuverlässig aufzunehmen.",
+      text: "Robuster Spritzschutz für die hintere Schwinge. Erhöhter Steifigkeit gegenüber dem Originalbauteil, bleibt jedoch ausreichend flexibel, um Belastungen und Vibrationen im Fahrbetrieb zuverlässig aufzunehmen.",
     },
   ];
 
