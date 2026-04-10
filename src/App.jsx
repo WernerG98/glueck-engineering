@@ -20,7 +20,7 @@ export default function GlueckEngineeringWebsite() {
       name: "Honda XRV750 RD07 Spritzschutz Schwinge hinten",
       image: "/Honda_XRV_RD07_Spritzschutz_Schwinge_hinten.jpg",
       price: "24,99 €",
-      text: "Robuster Spritzschutz für die hintere Schwinge. Erhöhte Steifigkeit gegenüber dem Originalbauteil, bleibt jedoch ausreichend flexibel, um Belastungen und Vibrationen im Fahrbetrieb zuverlässig aufzunehmen.",
+      text: "Robuster Spritzschutz für die hintere Schwinge. Steifer als das Originalbauteil, dabei aber weiterhin ausreichend flexibel, um Belastungen und Vibrationen im Fahrbetrieb zuverlässig aufzunehmen.",
     },
   ];
 
@@ -33,25 +33,15 @@ export default function GlueckEngineeringWebsite() {
     "/Artwork_Wave.png",
   ];
 
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [contactModalOpen, setContactModalOpen] = useState(false);
-  const [requestSubject, setRequestSubject] = useState("");
-  const [requestType, setRequestType] = useState("");
-  const [isSending, setIsSending] = useState(false);
-  const [attachment, setAttachment] = useState(null);
-
   const initialFormData = {
     name: "",
     email: "",
     phone: "",
 
-    // Allgemein
     notes: "",
 
-    // Produkt
     quantity: "1",
 
-    // Custom Artwork
     artworkColorMode: "",
     artworkWidth: "",
     artworkHeight: "",
@@ -59,12 +49,17 @@ export default function GlueckEngineeringWebsite() {
     artworkFrameColor: "",
     artworkQuantity: "1",
 
-    // Service
     serviceMaterial: "Nach Empfehlung",
     serviceApplication: "",
     serviceQuantity: "1",
   };
 
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [contactModalOpen, setContactModalOpen] = useState(false);
+  const [requestSubject, setRequestSubject] = useState("");
+  const [requestType, setRequestType] = useState("");
+  const [isSending, setIsSending] = useState(false);
+  const [attachment, setAttachment] = useState(null);
   const [formData, setFormData] = useState(initialFormData);
 
   const openContactModal = (subject, type) => {
@@ -92,7 +87,10 @@ export default function GlueckEngineeringWebsite() {
         };
       }
 
-      return { ...prev, [name]: value };
+      return {
+        ...prev,
+        [name]: value,
+      };
     });
   };
 
@@ -101,20 +99,17 @@ export default function GlueckEngineeringWebsite() {
     setAttachment(file);
   };
 
-  const submitContactForm = async () => {
+  const validateForm = () => {
     if (!formData.name.trim() || !formData.email.trim()) {
-      alert("Bitte Name und E-Mail ausfüllen.");
-      return;
+      return "Bitte Name und E-Mail ausfüllen.";
     }
 
     if (requestType === "general" && !formData.notes.trim()) {
-      alert("Bitte eine Nachricht eingeben.");
-      return;
+      return "Bitte eine Nachricht eingeben.";
     }
 
     if (requestType === "product" && !formData.quantity.trim()) {
-      alert("Bitte die Anzahl der benötigten Teile angeben.");
-      return;
+      return "Bitte die Anzahl der benötigten Teile angeben.";
     }
 
     if (requestType === "custom") {
@@ -125,13 +120,11 @@ export default function GlueckEngineeringWebsite() {
         !formData.artworkFrame.trim() ||
         !formData.artworkQuantity.trim()
       ) {
-        alert("Bitte alle Pflichtfelder für das individuelle 3D-Artwork ausfüllen.");
-        return;
+        return "Bitte alle Pflichtfelder für das individuelle 3D-Artwork ausfüllen.";
       }
 
       if (formData.artworkFrame === "Ja" && !formData.artworkFrameColor.trim()) {
-        alert("Bitte eine Rahmenfarbe auswählen.");
-        return;
+        return "Bitte eine Rahmenfarbe auswählen.";
       }
     }
 
@@ -141,9 +134,19 @@ export default function GlueckEngineeringWebsite() {
         !formData.serviceApplication.trim() ||
         !formData.serviceQuantity.trim()
       ) {
-        alert("Bitte alle Pflichtfelder für die 3D-Druck Dienstleistung ausfüllen.");
-        return;
+        return "Bitte alle Pflichtfelder für die 3D-Druck Dienstleistung ausfüllen.";
       }
+    }
+
+    return null;
+  };
+
+  const submitContactForm = async () => {
+    const validationError = validateForm();
+
+    if (validationError) {
+      alert(validationError);
+      return;
     }
 
     try {
@@ -190,7 +193,11 @@ export default function GlueckEngineeringWebsite() {
       setFormData(initialFormData);
       setAttachment(null);
     } catch (error) {
-      alert(error instanceof Error ? error.message : "Beim Versand ist ein Fehler aufgetreten.");
+      const message =
+        error instanceof Error
+          ? error.message
+          : "Beim Versand ist ein Fehler aufgetreten.";
+      alert(message);
     } finally {
       setIsSending(false);
     }
@@ -251,8 +258,8 @@ export default function GlueckEngineeringWebsite() {
           </h1>
 
           <p className="mt-6 max-w-2xl text-sm text-neutral-400 sm:text-base">
-            Individuelle Fertigteile, 3D-Artworks und technische
-            3D-Drucklösungen aus einer Hand.
+            Individuelle Fertigteile, technische 3D-Drucklösungen und
+            mehrschichtige 3D-Artworks aus einer Hand.
           </p>
         </section>
 
@@ -263,24 +270,102 @@ export default function GlueckEngineeringWebsite() {
             {fertigteile.map((item, index) => (
               <div
                 key={index}
-                className="flex flex-col rounded-2xl border border-white/10 bg-neutral-900 p-5 sm:p-6"
+                className="flex h-full flex-col rounded-2xl border border-white/10 bg-neutral-900 p-5 sm:p-6"
               >
                 <div className="aspect-square overflow-hidden rounded-xl border border-white/10 bg-neutral-950">
                   {renderFertigteilVisual(item)}
                 </div>
 
-                <h3 className="mt-4 text-base sm:text-lg">{item.name}</h3>
-                <p className="mt-2 text-lg font-semibold text-white">{item.price}</p>
-                <p className="mt-2 text-sm text-neutral-400">{item.text}</p>
+                <div className="mt-4 flex flex-1 flex-col">
+                  <h3 className="text-base sm:text-lg">{item.name}</h3>
+                  <p className="mt-2 text-lg font-semibold text-white">
+                    {item.price}
+                  </p>
+                  <p className="mt-2 text-sm text-neutral-400">{item.text}</p>
 
+                  <div className="mt-auto pt-6">
+                    <button
+                      onClick={() => openContactModal(item.name, "product")}
+                      className="w-full rounded-xl bg-neutral-700 py-3 text-center transition hover:bg-neutral-600"
+                    >
+                      Anfrage senden
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="mt-16 sm:mt-20">
+          <div className="grid gap-6 rounded-2xl border border-white/10 bg-neutral-900 p-6 sm:gap-8 sm:p-8 md:grid-cols-2 md:items-center md:p-10">
+            <div className="text-left">
+              <h2 className="text-2xl font-semibold">
+                3D-Druck und Dienstleistungen
+              </h2>
+
+              <p className="mt-3 text-lg text-white">
+                Deine Datei. Dein Bauteil. Wir übernehmen den Rest.
+              </p>
+
+              <p className="mt-4 text-sm text-neutral-400 sm:text-base">
+                Wir bieten individuelle 3D-Drucklösungen für funktionale
+                Bauteile, Prototypen und Kleinserien.
+                <br />
+                <br />
+                Du hast bereits eine fertige Datei? Dann sende uns einfach dein
+                Modell, wir übernehmen den Druck und liefern das Bauteil direkt
+                zu dir.
+                <br />
+                <br />
+                Alternativ unterstützen wir dich von der Idee bis zum fertigen
+                Produkt: von der technischen Beratung über Konstruktion und
+                Optimierung bis hin zur fertigen Bauteilproduktion.
+                <br />
+                <br />
+                Neben der reinen Fertigung unterstützen wir bei der Auslegung
+                von Bauteilen hinsichtlich mechanischer Belastung,
+                Temperaturbeständigkeit und Umgebungsbedingungen wie
+                UV-Einwirkung oder Feuchtigkeit.
+                <br />
+                <br />
+                Verfügbare Materialien umfassen unter anderem PLA, PETG, TPU,
+                ABS, ASA, PC, PA sowie faserverstärkte Varianten, zum Beispiel
+                Carbon. Je nach Anforderung lassen sich damit sowohl optische
+                als auch hochbelastbare und temperaturbeständige Komponenten
+                realisieren.
+                <br />
+                <br />
+                Geeignet für Einzelteile, Ersatzteile, Sonderanfertigungen
+                sowie kleine bis mittlere Stückzahlen.
+                <br />
+                <br />
+                Maximale Bauteilgröße: 33 × 32,5 × 32 cm.
+                <br />
+                <br />
+                Sende uns gerne deine Anfrage. Wir prüfen die technische
+                Umsetzbarkeit und erstellen ein individuelles Angebot.
+              </p>
+
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                 <button
-                  onClick={() => openContactModal(item.name, "product")}
-                  className="mt-6 rounded-xl bg-neutral-700 py-3 text-center transition hover:bg-neutral-600"
+                  onClick={() =>
+                    openContactModal("3D-Druck Dienstleistung", "service")
+                  }
+                  className="inline-block rounded-xl bg-neutral-700 px-6 py-3 text-center transition hover:bg-neutral-600"
                 >
                   Anfrage senden
                 </button>
               </div>
-            ))}
+            </div>
+
+            <div className="overflow-hidden rounded-2xl border border-white/10">
+              <img
+                src="/3D-Druck_S54_Ergebnis.jpg"
+                alt="3D-Druck Dienstleistung"
+                className="h-64 w-full object-cover sm:h-80 md:h-full"
+              />
+            </div>
           </div>
         </section>
 
@@ -292,15 +377,18 @@ export default function GlueckEngineeringWebsite() {
               </h2>
 
               <p className="mt-4 text-sm text-neutral-400 sm:text-base">
-                Wir verwandeln dein Motiv in ein mehrschichtiges 3D-Artwork mit ausgeprägter Tiefenwirkung.
-                Durch den schichtweisen Druck mit variierender Materialstärke entsteht eine plastische, dreidimensionale Oberfläche.
-                Realisierbar sind sowohl schwarz-weiße Ausführungen als auch mehrfarbige Varianten mit bis zu sechs Farben.
+                Wir verwandeln dein Motiv in ein mehrschichtiges 3D-Artwork mit
+                ausgeprägter Tiefenwirkung. Durch den schichtweisen Druck mit
+                variierender Materialstärke entsteht eine plastische,
+                dreidimensionale Oberfläche. Realisierbar sind sowohl
+                schwarz-weiße Ausführungen als auch mehrfarbige Varianten mit
+                bis zu sechs Farben.
                 <br />
                 <br />
                 Maximale Abmessungen: 30 × 30 cm.
                 <br />
                 Preise ab 19,99 € für Schwarz-Weiß beziehungsweise ab 29,99 €
-                (zzgl. Versand) für mehrfarbige Ausführungen.
+                zzgl. Versand für mehrfarbige Ausführungen.
                 <br />
                 <br />
                 Sende uns dein Bild einfach per Anfrage. Mit der Übermittlung
@@ -338,78 +426,6 @@ export default function GlueckEngineeringWebsite() {
               <img
                 src="/Artwork_Stanced_E46.png"
                 alt="3D Artwork BMW E46"
-                className="h-64 w-full object-cover sm:h-80 md:h-full"
-              />
-            </div>
-          </div>
-        </section>
-
-        <section className="mt-16 sm:mt-20">
-          <div className="grid gap-6 rounded-2xl border border-white/10 bg-neutral-900 p-6 sm:gap-8 sm:p-8 md:grid-cols-2 md:items-center md:p-10">
-            <div className="text-left">
-              <h2 className="text-2xl font-semibold">
-                3D-Druck und Dienstleistungen
-              </h2>
-
-              <p className="mt-3 text-lg text-white">
-                Deine Datei. Dein Bauteil. Wir übernehmen den Rest.
-              </p>
-
-              <p className="mt-4 text-sm text-neutral-400 sm:text-base">
-                Wir bieten individuelle 3D-Drucklösungen für funktionale
-                Bauteile, Prototypen und Kleinserien.
-                <br />
-                <br />
-                Du hast bereits eine fertige Datei? Dann sende uns einfach dein
-                Modell, wir übernehmen den Druck und liefern das Bauteil direkt
-                zu dir.
-                <br />
-                <br />
-                Alternativ unterstützen wir dich von der Idee bis zum fertigen
-                Produkt: von der technischen Beratung über Konstruktion und
-                Optimierung bis hin zur fertigen Bauteilproduktion.
-                <br />
-                <br />
-                Neben der reinen Fertigung unterstützen wir bei der Auslegung
-                von Bauteilen hinsichtlich mechanischer Belastung,
-                Temperaturbeständigkeit und Umgebungsbedingungen wie
-                UV-Einwirkung oder Feuchtigkeit.
-                <br />
-                <br />
-                Verfügbare Materialien umfassen unter anderem PLA, PETG, TPU,
-                ABS, ASA, PC, PA sowie faserverstärkte Varianten (z. B.
-                Carbon). Je nach Anforderung lassen sich damit sowohl optische
-                als auch hochbelastbare und temperaturbeständige Komponenten
-                realisieren.
-                <br />
-                <br />
-                Geeignet für Einzelteile, Ersatzteile, Sonderanfertigungen
-                sowie kleine bis mittlere Stückzahlen.
-                <br />
-                <br />
-                Maximale Bauteilgröße: 33 × 32,5 × 32 cm.
-                <br />
-                <br />
-                Sende uns gerne deine Anfrage. Wir prüfen die technische
-                Umsetzbarkeit und erstellen ein individuelles Angebot.
-              </p>
-
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                <button
-                  onClick={() =>
-                    openContactModal("3D-Druck Dienstleistung", "service")
-                  }
-                  className="inline-block rounded-xl bg-neutral-700 px-6 py-3 text-center transition hover:bg-neutral-600"
-                >
-                  Anfrage senden
-                </button>
-              </div>
-            </div>
-
-            <div className="overflow-hidden rounded-2xl border border-white/10">
-              <img
-                src="/3D-Druck_S54_Ergebnis.jpg"
-                alt="3D-Druck Dienstleistung"
                 className="h-64 w-full object-cover sm:h-80 md:h-full"
               />
             </div>
@@ -537,7 +553,7 @@ export default function GlueckEngineeringWebsite() {
               <span>© Glück Engineering</span>
             </div>
 
-            <div className="text-sm text-center leading-tight">
+            <div className="text-center text-sm leading-tight">
               <div>Inhaber M.Eng. Werner Glück</div>
               <div className="text-neutral-400">94424 Arnstorf</div>
             </div>
