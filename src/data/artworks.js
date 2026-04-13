@@ -1,6 +1,6 @@
 export const artworkGalleryImages = [
   "/Artwork_Kein_Leben_bleibt_Ergebnis.png",
-  "/Artwork_Stanced_F80_Nils_Ergebnis.png",
+  "/Artwork_Stanced_F80_Nils_Ergebnis.jpg",
 ];
 
 export const artworkIntroText =
