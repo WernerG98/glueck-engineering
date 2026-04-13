@@ -1,5 +1,5 @@
 export const artworkGalleryImages = [
-  "/Artwork_Kein_Leben_bleibt_fertig.png",
+  "/Artwork_Kein_Leben_bleibt_Ergebnis.png",
 ];
 
 export const artworkIntroText =
