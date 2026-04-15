@@ -12,7 +12,7 @@ const fertigteile = [
     text: "Ersatzclip für die Verstellung der Kopfstütze. Standardmäßig in Schwarz, andere Wunschfarbe bitte bei der Bestellung angeben.",
   },
   {
-    name: "Honda XRV750 RD07 Spritzschutz Schwinge hinten",
+    name: "Honda XRV750 RD07 Africa Twin Spritzschutz Schwinge",
     image: "/Honda_XRV_RD07_Spritzschutz_Schwinge_hinten.jpg",
     price: "24,99 €",
     text: "Robuster Spritzschutz für die hintere Schwinge. Steifer als das Originalbauteil, dabei aber weiterhin ausreichend flexibel, um Belastungen und Vibrationen im Fahrbetrieb zuverlässig aufzunehmen.",
