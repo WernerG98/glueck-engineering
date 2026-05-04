@@ -18,6 +18,7 @@ export default function Footer() {
           <div className="text-center text-sm leading-tight">
             <div>Inhaber M.Eng. Werner Glück</div>
             <div className="text-neutral-400">94424 Arnstorf</div>
+            <div className="text-neutral-400">USt-IdNr. DE461370222</div>
           </div>
 
           <div className="flex justify-center md:justify-end">
